@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "119311406146",
+    "project_id": "convertpots",
+    "storage_bucket": "convertpots.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119311406146:android:871c8a0f94c625b57309db",
+        "android_client_info": {
+          "package_name": "com.mixdor.covertpots"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119311406146-4eksf0m44fdaf09dtrtem2ialdqn66lp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzj1SyEh0wMLlrL0uwnDO6996c-259Og0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119311406146-4eksf0m44fdaf09dtrtem2ialdqn66lp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

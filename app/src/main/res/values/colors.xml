@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="verde_base">#53913C</color>
+    <color name="rojo">#91312D</color>
+    <color name="moradin">#6F4A91</color>
+    <color name="amarillo">#8E9134</color>
+    <color name="rosado">#CD2535</color>
+    <color name="statusVerde">#43915E</color>
+    <color name="statusAmarillo">#91813C</color>
+    <color name="statusRojo">#914643</color>
+    <color name="negro">#FF000000</color>
+    <color name="blanco">#FFFFFFFF</color>
+</resources>

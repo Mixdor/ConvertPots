@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CovertPots</string>
+
+    <!-- Activity Inicio -->
+    <string name="lema">El cuidado de tus plantas a donde quieras que vayas</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="olvidastePass">¿Has olvidado tu contraseña?</string>
+
+    <!-- Activity Registro -->
+    <string name="registro">Registro</string>
+    <string name="correo">Correo Electronico</string>
+    <string name="usuario">Usuario</string>
+    <string name="contraseña">Contraseña</string>
+
+    <!-- Activity Vincular -->
+    <string name="vincular_disp">Vincular Dispositivo</string>
+    <string name="numero_serie">Número de Serie</string>
+    <string name="vincular">Vincular</string>
+
+    <!-- Activity Editar Planta -->
+    <string name="edit_plant">Editar Planta</string>
+    <string name="nombre_planta">Nombre de Planta</string>
+    <string name="tipo_planta">Tipo de Planta</string>
+    <string name="cambiar_pas">Cambiar Contraseña</string>
+    <string name="nueva_pass">Contraseña Nueva</string>
+    <string name="hecho">Hecho</string>
+
+    <!-- Activity Main -->
+    <string name="regar">Regar Planta</string>
+
+    <!-- Activity Ajustes -->
+    <string name="ajustes">Ajustes</string>
+    <string name="unidades">Unidades</string>
+    <string name="temp">Temperatura</string>
+
+    <string name="cuenta">Account</string>
+    <string name="logout">Cerrar Sesión</string>
+
+    <string name="redes_soc">Redes Sociales</string>
+    <string name="proyecto">Proyecto</string>
+    <string name="dev_dis">Desarrollo y Diseño</string>
+
+
+    <string-array name="uniTipoPlanta">
+        <item>Hidrófitas</item>
+        <item>Mesófitas</item>
+        <item>Xerófitas</item>
+        <item>Higrófitas</item>
+    </string-array>
+
+    <string name="correoInvalido">Correo Inválido</string>
+    <string name="correoInvalidoMsg">Se ha producido un error authenticando al usuario</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="min6Caract">Mínimo 6 caracteres</string>
+    <string name="faltanDatosRegist">Faltan datos para el registro</string>
+    <string name="faltanDatosLogin">Faltan datos para iniciar sesión</string>dispNoEncontrado
+    <string name="dispNoEncontrado">Numero serial o contraseña inválidos</string>
+    <string name="faltanDatos">Faltan datos</string>
+    <string name="notaDatosAlRespaldo">Nota: Estos datos se pueden encontrar al respaldo del dispositivo fisico</string>
+    <string name="faltaVerifCorreo">No olvides verificar el correo electrónico</string>
+
+
+</resources>

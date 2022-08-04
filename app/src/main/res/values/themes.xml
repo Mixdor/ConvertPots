@@ -1,0 +1,26 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--SplashScream -->
+    <style name="Theme.splashScreen" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_img_light</item>
+        <item name="android:statusBarColor">@color/rojo</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="Theme.CovertPots" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/rojo</item>
+        <item name="colorPrimaryVariant">@color/verde_base</item>
+        <item name="colorOnPrimary">@color/blanco</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/verde_base</item>
+        <item name="colorSecondaryVariant">@color/rosado</item>
+        <item name="colorOnSecondary">@color/negro</item>
+        <!-- Status bar color. -->
+        <!-- ?attr/colorPrimary -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/rojo</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+
+</resources>

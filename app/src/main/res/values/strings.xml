@@ -1,0 +1,88 @@
+<resources>
+    <string name="app_name" translatable="false">CovertPots</string>
+
+    <!-- Activity Inicio -->
+    <string name="lema">Caring for your plants wherever you go</string>
+    <string name="iniciar_sesion">Log In</string>
+    <string name="registrarse">Sign In</string>
+    <string name="olvidastePass">Forgot Password?</string>
+
+    <!-- Activity Registro -->
+    <string name="registro">Register</string>
+    <string name="correo">E-Mail</string>
+    <string name="usuario">User</string>
+    <string name="contraseña">Password</string>
+
+    <!-- Activity Vincular -->
+    <string name="vincular_disp">Link Device</string>
+    <string name="numero_serie">Serial number</string>
+    <string name="vincular">Link up</string>
+
+    <!-- Activity Editar Planta -->
+    <string name="edit_plant">Edit Plant</string>
+    <string name="nombre_planta">Plant Name</string>
+    <string name="tipo_planta">Plant Type</string>
+    <string name="cambiar_pas">Change Password</string>
+    <string name="nueva_pass">New password</string>
+    <string name="hecho">Done</string>
+
+    <!-- Activity Main -->
+    <string name="regar">Water Plant</string>
+
+    <!-- Activity Ajustes -->
+    <string name="ajustes">Settings</string>
+    <string name="unidades">Units</string>
+    <string name="temp">Temperature</string>
+
+    <string name="cuenta">Account</string>
+    <string name="correoDefault" translatable="false">correo@convertpots.com</string>
+    <string name="logout">log Out</string>
+
+    <string name="redes_soc">Social Networks</string>
+        <string name="facebook" translatable="false">Facebook</string>
+        <string name="twitter" translatable="false">Twitter</string>
+        <string name="insta" translatable="false">Instagram</string>
+        <string name="youtube" translatable="false">YouTube</string>
+    <string name="proyecto">Project</string>
+        <string name="figma" translatable="false">Figma</string>
+        <string name="github" translatable="false">GitHub</string>
+    <string name="dev_dis">Development and Design</string>
+
+    <string name="dev1" translatable="false">Luis Miguel Avila</string>
+    <string name="dev2" translatable="false">Jhonier David Ortiz</string>
+    <string name="año" translatable="false">2022</string>
+
+    <!-- Arrays de Strings -->
+
+    <string-array name="uniTemperatura">
+        <item translatable="false">Celsius</item>
+        <item translatable="false">Fahrenheit</item>
+        <item translatable="false">Kelvin</item>
+    </string-array>
+
+    <string-array name="uniTipoPlanta">
+        <item>Hydrophytes</item>
+        <item>Mesophytes</item>
+        <item>Xerophytes</item>
+        <item>hygrophytes</item>
+    </string-array>
+
+
+    <string name="porcentaje" translatable="false">%1$s /%</string>
+    <string name="lux" translatable="false">lux</string>
+
+    <string name="error" translatable="false">Error</string>
+    <string name="correoInvalido">Invalid Email</string>
+    <string name="correoInvalidoMsg">An error occurred authenticating the user</string>
+    <string name="aceptar">OK</string>
+    <string name="min6Caract">Min 6 characters</string>
+    <string name="faltanDatosRegist">Missing data for registration</string>
+    <string name="faltanDatosLogin">Missing data to login</string>
+    <string name="dispNoEncontrado">Invalid serial number or password</string>
+    <string name="faltanDatos">Missing data</string>
+    <string name="notaDatosAlRespaldo">Note: This data can be found on the back of the physical device</string>
+    <string name="faltaVerifCorreo">Don\'t forget to verify email</string>
+
+
+
+</resources>
