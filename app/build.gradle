@@ -38,7 +38,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-
     implementation platform('com.google.firebase:firebase-bom:30.2.0')
     // Declare the dependency for the Firebase Authentication library
     implementation 'com.google.firebase:firebase-auth-ktx'
@@ -49,4 +48,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    //Graficos
+    implementation 'com.github.Gruzer:simple-gauge-android:0.3.1'
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.4'
 }
