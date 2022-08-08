@@ -36,16 +36,22 @@
 
     <string name="cuenta">Account</string>
     <string name="correoDefault" translatable="false">correo@convertpots.com</string>
-    <string name="logout">log Out</string>
+    <string name="logout">Log Out</string>
+
+    <string name="acercadeapp">About app</string>
+    <string name="info" translatable="false">Info.</string>
+
+    <!-- Activity Acerca de -->
+    <string name="acercade">About</string>
 
     <string name="redes_soc">Social Networks</string>
-        <string name="facebook" translatable="false">Facebook</string>
-        <string name="twitter" translatable="false">Twitter</string>
-        <string name="insta" translatable="false">Instagram</string>
-        <string name="youtube" translatable="false">YouTube</string>
+    <string name="facebook" translatable="false">Facebook</string>
+    <string name="twitter" translatable="false">Twitter</string>
+    <string name="insta" translatable="false">Instagram</string>
+    <string name="youtube" translatable="false">YouTube</string>
     <string name="proyecto">Project</string>
-        <string name="figma" translatable="false">Figma</string>
-        <string name="github" translatable="false">GitHub</string>
+    <string name="figma" translatable="false">Figma</string>
+    <string name="github" translatable="false">GitHub</string>
     <string name="dev_dis">Development and Design</string>
 
     <string name="dev1" translatable="false">Luis Miguel Avila</string>

@@ -52,6 +52,46 @@
                 android:layout_height="match_parent">
 
                 <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/halfGauge4"
+                    app:layout_constraintEnd_toEndOf="@+id/halfGauge4"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/halfGauge4"
+                    app:srcCompat="@drawable/icon_temperatura" />
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/halfGauge3"
+                    app:layout_constraintEnd_toEndOf="@+id/halfGauge3"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/halfGauge3"
+                    app:srcCompat="@drawable/icon_iluminacion" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/halfGauge2"
+                    app:layout_constraintEnd_toEndOf="@+id/halfGauge2"
+                    app:layout_constraintHorizontal_bias="0.529"
+                    app:layout_constraintStart_toStartOf="@+id/halfGauge2"
+                    app:srcCompat="@drawable/icon_aire" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/halfGauge"
+                    app:layout_constraintEnd_toEndOf="@+id/halfGauge"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/halfGauge"
+                    app:srcCompat="@drawable/icon_humedad" />
+
+                <ImageView
                     android:id="@+id/iViewPlantaGr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,13 +136,53 @@
                         app:srcCompat="@drawable/camara" />
                 </FrameLayout>
 
+                <com.ekn.gruzer.gaugelibrary.ArcGauge
+                    android:id="@+id/halfGauge"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintEnd_toStartOf="@+id/halfGauge2"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iViewPlantaGr" />
+
+                <com.ekn.gruzer.gaugelibrary.ArcGauge
+                    android:id="@+id/halfGauge2"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="32dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/halfGauge"
+                    app:layout_constraintTop_toBottomOf="@+id/iViewPlantaGr" />
+
+                <com.ekn.gruzer.gaugelibrary.ArcGauge
+                    android:id="@+id/halfGauge3"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintEnd_toStartOf="@+id/halfGauge4"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+                <com.ekn.gruzer.gaugelibrary.ArcGauge
+                    android:id="@+id/halfGauge4"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/halfGauge3"
+                    app:layout_constraintTop_toBottomOf="@+id/halfGauge2" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginTop="24dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/iViewPlantaGr">
+                    app:layout_constraintTop_toBottomOf="@+id/halfGauge3">
 
                     <ImageView
                         android:id="@+id/imageView9"
@@ -192,17 +272,8 @@
                         app:layout_constraintStart_toEndOf="@+id/imageView11"
                         app:layout_constraintTop_toTopOf="@+id/imageView11" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.ekn.gruzer.gaugelibrary.ArcGauge
-                    android:id="@+id/arcGauge"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

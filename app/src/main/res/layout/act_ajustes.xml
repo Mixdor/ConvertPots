@@ -62,24 +62,23 @@
                         android:paddingVertical="16dp"
                         android:text="@string/temp"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="#616161"
                         android:textSize="14sp"
                         tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
-                    android:id="@+id/tVRedesSociales"
+                    android:id="@+id/tVAbout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:text="@string/redes_soc"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="35dp"
+                    android:text="@string/acercadeapp"
                     android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btnLogout" />
+                    app:layout_constraintTop_toBottomOf="@+id/tVCorreoCuenta" />
 
                 <TextView
                     android:id="@+id/tVRedesSociales4"
@@ -107,181 +106,25 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tVRedesSociales4" />
 
-                <TextView
-                    android:id="@+id/tVRedesSociales2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:text="@string/proyecto"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-                <TextView
-                    android:id="@+id/tVRedesSociales3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:text="@string/dev_dis"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-                <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tVRedesSociales">
-
-                    <ImageButton
-                        android:id="@+id/btnFace"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:contentDescription="@string/facebook"
-                        android:minWidth="48dp"
-                        android:minHeight="48dp"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        app:srcCompat="@drawable/icon_social_facebook" />
-
-                    <ImageButton
-                        android:id="@+id/btnTwitter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:contentDescription="@string/twitter"
-                        android:minWidth="48dp"
-                        android:minHeight="48dp"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        app:srcCompat="@drawable/icon_social_twitter"
-                        tools:ignore="ImageContrastCheck" />
-
-                    <ImageButton
-                        android:id="@+id/btnInstagram"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:contentDescription="@string/insta"
-                        android:minWidth="48dp"
-                        android:minHeight="48dp"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        app:srcCompat="@drawable/icon_social_instagram" />
-
-                    <ImageButton
-                        android:id="@+id/btnYoutube"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:contentDescription="@string/youtube"
-                        android:minWidth="48dp"
-                        android:minHeight="48dp"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        app:srcCompat="@drawable/icon_social_youtube" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayout2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tVRedesSociales2">
-
-                    <ImageButton
-                        android:id="@+id/btnFigma"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:contentDescription="@string/figma"
-                        android:minWidth="48dp"
-                        android:minHeight="48dp"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        app:srcCompat="@drawable/icon_dev_figma"
-                        tools:ignore="ImageContrastCheck" />
-
-                    <ImageButton
-                        android:id="@+id/btnGithub"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:contentDescription="@string/github"
-                        android:minWidth="48dp"
-                        android:minHeight="48dp"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        app:srcCompat="@drawable/icon_dev_github" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/dev1"
-                    android:textAlignment="center"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tVRedesSociales3" />
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="24dp"
-                    android:text="@string/año"
-                    android:textAlignment="center"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
                 <Button
                     android:id="@+id/btnLogout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:text="@string/logout"
+                    app:layout_constraintBottom_toBottomOf="@+id/tVCorreoCuenta"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tVCorreoCuenta" />
+                    app:layout_constraintTop_toTopOf="@+id/textView8" />
 
                 <TextView
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:text="@string/cuenta"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/LayoutTemperatura" />
 
@@ -289,12 +132,22 @@
                     android:id="@+id/tVCorreoCuenta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/correoDefault"
                     android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+                <Button
+                    android:id="@+id/btnInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/info"
+                    app:layout_constraintBottom_toBottomOf="@+id/tVAbout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tVAbout" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

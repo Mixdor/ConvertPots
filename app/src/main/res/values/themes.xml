@@ -16,6 +16,7 @@
         <item name="colorSecondary">@color/verde_base</item>
         <item name="colorSecondaryVariant">@color/rosado</item>
         <item name="colorOnSecondary">@color/negro</item>
+        <item name="colorPrimaryDark">@color/negro</item>
         <!-- Status bar color. -->
         <!-- ?attr/colorPrimary -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/rojo</item>

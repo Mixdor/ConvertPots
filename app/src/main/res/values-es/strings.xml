@@ -38,10 +38,13 @@
     <string name="cuenta">Account</string>
     <string name="logout">Cerrar Sesión</string>
 
+    <string name="acercadeapp">Acerca de la app</string>
+
+    <!-- Activity Acerca de -->
+    <string name="acercade">Acerca de</string>
     <string name="redes_soc">Redes Sociales</string>
     <string name="proyecto">Proyecto</string>
     <string name="dev_dis">Desarrollo y Diseño</string>
-
 
     <string-array name="uniTipoPlanta">
         <item>Hidrófitas</item>
