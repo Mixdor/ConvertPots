@@ -164,11 +164,11 @@ class ActMain : AppCompatActivity() {
 
 
         btnMore.setOnClickListener{
-            Toast.makeText(this,"Más Plantas",Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@ActMain,ActMorePlants::class.java)
+            startActivity(intent)
         }
 
         btnConfig.setOnClickListener{
-            //Toast.makeText(this,"Configuracion",Toast.LENGTH_SHORT).show()
             val intent = Intent(this@ActMain,ActAjustes::class.java)
             startActivity(intent)
         }
