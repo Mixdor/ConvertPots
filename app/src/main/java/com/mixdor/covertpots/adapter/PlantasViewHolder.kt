@@ -10,8 +10,6 @@ import com.google.android.material.card.MaterialCardView
 import com.mixdor.covertpots.R
 import com.mixdor.covertpots.model.mPlanta
 
-private val selec:MutableList<mPlanta> = ArrayList()
-
 class PlantasViewHolder(view:View) : RecyclerView.ViewHolder(view){
 
     val serial = view.findViewById<TextView>(R.id.cardSerialPlanta)
@@ -19,7 +17,7 @@ class PlantasViewHolder(view:View) : RecyclerView.ViewHolder(view){
     val foto = view.findViewById<ImageView>(R.id.cardFotoPlanta)
     val card = view.findViewById<MaterialCardView>(R.id.mCardPlanta)
 
-    fun render(planta:mPlanta, onClickListener:(mPlanta)->Unit, onClickLong:(mPlanta)->Boolean){
+    fun render(planta:mPlanta, onClickListener:(mPlanta)->Unit, onClickLong:(mPlanta)->Boolean, selec:MutableList<mPlanta>){
         serial.text = planta.id.toString()
         nombre.text = planta.nombre
 
