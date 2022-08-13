@@ -6,6 +6,7 @@ data class mPlanta(
     var sTemp: Int,
     var sIlu: Int,
     var sHumS: Int,
-    var sHumA: Int
+    var sHumA: Int,
+    var checked: Boolean
 
 )
