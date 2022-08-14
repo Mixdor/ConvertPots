@@ -21,4 +21,9 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/verde_base</item>
         <!-- Customize your theme here. -->
     </style>
+
+
+    <style name="fullDialogTitle" parent="@android:style/TextAppearance.DialogWindowTitle">
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>

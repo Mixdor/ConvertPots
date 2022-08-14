@@ -10,6 +10,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1165" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/drawable/ic_logo_app_foreground.xml" value="0.1165" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/drawable/icon.xml" value="0.2105" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/drawable/icon_add.xml" value="0.1875" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/drawable/icon_dev_figma.xml" value="0.1165" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/drawable/icon_dev_github.xml" value="0.1155" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/drawable/icon_facebook.xml" value="0.1165" />
@@ -40,7 +41,7 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/layout/card_planta.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/layout/dropdown_item.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/layout/frag_detalles_planta.xml" value="0.203125" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/layout/frag_detalles_planta.xml" value="0.33" />
       </map>
     </option>
   </component>

@@ -37,32 +37,41 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="?attr/colorPrimary"
         android:clickable="true"
+        app:tint="@color/blanco"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/icon_add" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fBtnPlantEditar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="?attr/colorPrimary"
         android:clickable="true"
         android:visibility="gone"
+        app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@+id/fBtnPlantAgregar"
         app:layout_constraintEnd_toEndOf="@+id/fBtnPlantAgregar"
         app:layout_constraintStart_toStartOf="@+id/fBtnPlantAgregar"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+        app:srcCompat="@drawable/icon_edit"
+        app:tint="@color/blanco" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fBtnPlantEliminar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="?attr/colorPrimary"
         android:clickable="true"
         android:visibility="gone"
+        app:fabSize="mini"
         app:layout_constraintBottom_toTopOf="@+id/fBtnPlantEditar"
         app:layout_constraintEnd_toEndOf="@+id/fBtnPlantEditar"
         app:layout_constraintStart_toStartOf="@+id/fBtnPlantEditar"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
+        app:srcCompat="@drawable/icon_delete"
+        app:tint="@color/blanco" />
 </androidx.constraintlayout.widget.ConstraintLayout>
