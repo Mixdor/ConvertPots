@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mixdor.covertpots.adapter.PlantasAdapter
+import com.mixdor.covertpots.fragment.FragDetallesPlanta
 import com.mixdor.covertpots.model.mPlanta
 
 class ActMorePlants : AppCompatActivity() {
@@ -41,24 +43,19 @@ class ActMorePlants : AppCompatActivity() {
     private fun getItems(): MutableList<mPlanta> {
         val itemLists : MutableList<mPlanta> = ArrayList()
 
-        val s1 = 23
-        val s2 = 56
-        val s3 = 84
-        val s4 = 14
-
-        itemLists.add(mPlanta(16523, "Kotralia", s1, s2, s3, s4,false))
-        itemLists.add(mPlanta(44618, "Castorila", s1, s2, s3, s4, false))
-        itemLists.add(mPlanta(15143, "Andesita", s1, s2, s3, s4, false))
-        itemLists.add(mPlanta(96318, "Viperesa", s1, s2, s3, s4, false))
-        itemLists.add(mPlanta(94664, "Kotralia2", s1, s2, s3, s4,false))
-        itemLists.add(mPlanta(41151, "Castorila2", s1, s2, s3, s4, false))
-        itemLists.add(mPlanta(33445, "Andesita2", s1, s2, s3, s4, false))
-        itemLists.add(mPlanta(10024, "Viperesa2", s1, s2, s3, s4, false))
-        itemLists.add(mPlanta(47620, "Kotralia3", s1, s2, s3, s4,false))
-        itemLists.add(mPlanta(75141, "Castorila3", s1, s2, s3, s4, false))
-        itemLists.add(mPlanta(11146, "Andesita3", s1, s2, s3, s4, false))
-        itemLists.add(mPlanta(10101, "Viperesa3", s1, s2, s3, s4, false))
-        itemLists.add(mPlanta(14691, "Viperesa4", s1, s2, s3, s4, false))
+        itemLists.add(mPlanta(16523, "Kotralia", 44, 27, 87, 15,false))
+        itemLists.add(mPlanta(44618, "Castorila", 55, 96, 44, 66, false))
+        itemLists.add(mPlanta(15143, "Andesita", 87, 15, 66, 44, false))
+        itemLists.add(mPlanta(96318, "Viperesa", 96, 44, 15, 13, false))
+        itemLists.add(mPlanta(94664, "Kotralia2", 77, 27, 66, 37,false))
+        itemLists.add(mPlanta(41151, "Castorila2", 15, 44, 55, 77, false))
+        itemLists.add(mPlanta(33445, "Andesita2", 87, 77, 15, 44, false))
+        itemLists.add(mPlanta(10024, "Viperesa2", 27, 96, 87, 96, false))
+        itemLists.add(mPlanta(47620, "Kotralia3", 66, 55, 13, 44,false))
+        itemLists.add(mPlanta(75141, "Castorila3", 96, 87, 44, 55, false))
+        itemLists.add(mPlanta(11146, "Andesita3", 13, 66, 27, 87, false))
+        itemLists.add(mPlanta(10101, "Viperesa3", 27, 44, 87, 66, false))
+        itemLists.add(mPlanta(14691, "Viperesa4", 87, 55, 44, 15, false))
 
         return itemLists
     }
@@ -69,6 +66,9 @@ class ActMorePlants : AppCompatActivity() {
 
             //Acá va la ventana para ver toda la info de la planta seleccionada, la hare despues XD
             //Pendiente
+            //selecionados.get(0).id
+
+            showDialogFragment(planta)
 
         }
         else{
@@ -125,6 +125,26 @@ class ActMorePlants : AppCompatActivity() {
 
 
         return true
+    }
+
+    fun showDialogFragment(planta:mPlanta) {
+        val fragmentManager = supportFragmentManager
+        val newFragment = FragDetallesPlanta(planta)
+        if (false) {
+            // The device is using a large layout, so show the fragment as a dialog
+            newFragment.show(fragmentManager, "dialog")
+        } else {
+            // The device is smaller, so show the fragment fullscreen
+            val transaction = fragmentManager.beginTransaction()
+            // For a little polish, specify a transition animation
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            // To make it fullscreen, use the 'content' root view as the container
+            // for the fragment, which is always the root view for the activity
+            transaction
+                .add(android.R.id.content, newFragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     /*private fun mostrarMenuSeleccion() {
