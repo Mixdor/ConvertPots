@@ -42,6 +42,8 @@
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/layout/card_planta.xml" value="0.33" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/layout/dropdown_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/layout/frag_detalles_planta.xml" value="0.33" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/layout/frag_editar_planta.xml" value="0.25" />
+        <entry key="..\:/Users/ASUS/AndroidStudioProjects/CovertPots/app/src/main/res/layout/frag_nueva_planta.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>

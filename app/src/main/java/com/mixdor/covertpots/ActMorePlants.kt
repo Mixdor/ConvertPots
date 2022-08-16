@@ -7,9 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mixdor.covertpots.adapter.PlantasAdapter
 import com.mixdor.covertpots.fragment.FragDetallesPlanta
+import com.mixdor.covertpots.fragment.FragEditarPlanta
+import com.mixdor.covertpots.fragment.FragNuevaPlanta
 import com.mixdor.covertpots.model.mPlanta
 
 class ActMorePlants : AppCompatActivity() {
@@ -31,8 +34,31 @@ class ActMorePlants : AppCompatActivity() {
 
         actualizarValores()
 
-    }
+        btnAgregar.setOnClickListener {
+            showFragmentNuevaPlanta()
+        }
 
+        btnEdit?.setOnClickListener {
+            showFragmentEditarPlanta(selecionados[0])
+        }
+
+        btnDelete?.setOnClickListener {
+
+            MaterialAlertDialogBuilder(this)
+                .setTitle("Remover planta")
+                .setMessage("Esa seguro de remover esta planta")
+                .setNegativeButton("Cancelar") { dialog, which ->
+
+                }
+                .setPositiveButton("Aceptar") { dialog, which ->
+
+                }
+                .show()
+
+
+        }
+
+    }
 
     private fun actualizarValores() {
         val recyclerPlants = findViewById<RecyclerView>(R.id.recyclerViewPlants)
@@ -63,12 +89,8 @@ class ActMorePlants : AppCompatActivity() {
     fun itemSelected(planta:mPlanta){
 
         if (selecionados.isEmpty()){
-
-            //Acá va la ventana para ver toda la info de la planta seleccionada, la hare despues XD
-            //Pendiente
-            //selecionados.get(0).id
-
-            showDialogFragment(planta)
+            
+            showFragmentDetalles(planta)
 
         }
         else{
@@ -127,10 +149,12 @@ class ActMorePlants : AppCompatActivity() {
         return true
     }
 
-    fun showDialogFragment(planta:mPlanta) {
+    fun showFragmentDetalles(planta:mPlanta) {
         val fragmentManager = supportFragmentManager
         val newFragment = FragDetallesPlanta(planta)
-        if (false) {
+        val isLargeLayout = resources.getBoolean(R.bool.large_layout)
+
+        if (isLargeLayout) {
             // The device is using a large layout, so show the fragment as a dialog
             newFragment.show(fragmentManager, "dialog")
         } else {
@@ -147,18 +171,48 @@ class ActMorePlants : AppCompatActivity() {
         }
     }
 
-    /*private fun mostrarMenuSeleccion() {
-        btnDelete?.visibility = View.VISIBLE
-        if (adapterPlants?.itemSelectCount!! > 1) {
-            btnEdit?.visibility = View.GONE
+    private fun showFragmentEditarPlanta(planta: mPlanta) {
+        val fragmentManager = supportFragmentManager
+        val newFragment = FragEditarPlanta(planta)
+        val isLargeLayout = resources.getBoolean(R.bool.large_layout)
+
+        if (isLargeLayout) {
+            // The device is using a large layout, so show the fragment as a dialog
+            newFragment.show(fragmentManager, "dialog")
         } else {
-            btnEdit?.visibility = View.VISIBLE
+            // The device is smaller, so show the fragment fullscreen
+            val transaction = fragmentManager.beginTransaction()
+            // For a little polish, specify a transition animation
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            // To make it fullscreen, use the 'content' root view as the container
+            // for the fragment, which is always the root view for the activity
+            transaction
+                .add(android.R.id.content, newFragment)
+                .addToBackStack(null)
+                .commit()
         }
     }
 
-    private fun ocultarMenuSeleccion() {
-        btnEdit?.visibility = View.GONE
-        btnDelete?.visibility = View.GONE
-    }*/
+    private fun showFragmentNuevaPlanta() {
+        val fragmentManager = supportFragmentManager
+        val newFragment = FragNuevaPlanta()
+        val isLargeLayout = resources.getBoolean(R.bool.large_layout)
+
+        if (isLargeLayout) {
+            // The device is using a large layout, so show the fragment as a dialog
+            newFragment.show(fragmentManager, "dialog")
+        } else {
+            // The device is smaller, so show the fragment fullscreen
+            val transaction = fragmentManager.beginTransaction()
+            // For a little polish, specify a transition animation
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            // To make it fullscreen, use the 'content' root view as the container
+            // for the fragment, which is always the root view for the activity
+            transaction
+                .add(android.R.id.content, newFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+    }
     
 }

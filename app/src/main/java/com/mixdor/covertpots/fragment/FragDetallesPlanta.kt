@@ -41,7 +41,7 @@ class FragDetallesPlanta(plant: mPlanta) : DialogFragment() {
         toolbar.setNavigationOnClickListener {
             dismiss()
         }
-        toolbar.setTitleTextAppearance(requireContext(), R.style.fullDialogTitle)
+        toolbar.setTitleTextAppearance(view.context, R.style.fullDialogTitle)
         toolbar.setTitleTextColor(Color.WHITE)
 
 
