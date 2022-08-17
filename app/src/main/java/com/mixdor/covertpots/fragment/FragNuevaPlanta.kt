@@ -26,6 +26,13 @@ class FragNuevaPlanta : DialogFragment() {
         }
         toolbar.setTitleTextAppearance(view.context, R.style.fullDialogTitle)
         toolbar.setTitleTextColor(Color.WHITE)
+        toolbar.inflateMenu(R.menu.menu_dialog)
+        toolbar.setOnMenuItemClickListener {
+
+            //Guardar Nueva planta
+
+            true
+        }
 
         return view
     }

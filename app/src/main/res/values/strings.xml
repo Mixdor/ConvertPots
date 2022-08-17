@@ -89,5 +89,6 @@
     <string name="notaDatosAlRespaldo">Note: This data can be found on the back of the physical device</string>
     <string name="faltaVerifCorreo">Don\'t forget to verify email</string>
 
+    <string name="guardar">Save</string>
 
 </resources>

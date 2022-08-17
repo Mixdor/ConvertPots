@@ -3,11 +3,10 @@ package com.mixdor.covertpots.fragment
 import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.textfield.TextInputEditText
 import com.mixdor.covertpots.R
 import com.mixdor.covertpots.model.mPlanta
 
@@ -24,6 +23,11 @@ class FragEditarPlanta(plant:mPlanta) : DialogFragment() {
         val view = inflater.inflate(R.layout.frag_editar_planta, container, false)
 
         val toolbar = view.findViewById<androidx.appcompat.widget.Toolbar>(R.id.fracEditarToolbar)
+        val txtSerial = view.findViewById<TextInputEditText>(R.id.FragEditEdNumSerie)
+        val txtNombre = view.findViewById<TextInputEditText>(R.id.FragEditEdNombrePlanta)
+
+        txtSerial.setText(planta.id.toString())
+        txtNombre.setText(planta.nombre)
 
         toolbar.title = "Editar Planta"
         toolbar.setNavigationOnClickListener {
@@ -31,6 +35,13 @@ class FragEditarPlanta(plant:mPlanta) : DialogFragment() {
         }
         toolbar.setTitleTextAppearance(view.context, R.style.fullDialogTitle)
         toolbar.setTitleTextColor(Color.WHITE)
+        toolbar.inflateMenu(R.menu.menu_dialog)
+        toolbar.setOnMenuItemClickListener {
+
+            //Guardar al editar planta
+
+            true
+        }
 
         return view
     }

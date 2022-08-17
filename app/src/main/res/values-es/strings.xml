@@ -64,5 +64,6 @@
     <string name="notaDatosAlRespaldo">Nota: Estos datos se pueden encontrar al respaldo del dispositivo fisico</string>
     <string name="faltaVerifCorreo">No olvides verificar el correo electrónico</string>
 
+    <string name="guardar">Guardar</string>
 
 </resources>
