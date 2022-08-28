@@ -6,6 +6,8 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class ActAjustes : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,8 +31,12 @@ class ActAjustes : AppCompatActivity() {
 
         btnLogout.setOnClickListener {
 
+            //Limpia las preferencias
             val editor: SharedPreferences.Editor = prefer.edit()
             editor.clear().apply()
+
+            //Cierra sesion
+            Firebase.auth.signOut()
 
             val intent = Intent(this@ActAjustes,ActInicio::class.java)
             startActivity(intent)

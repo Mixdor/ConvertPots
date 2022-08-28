@@ -12,4 +12,9 @@
     <color name="blanco">#FFFFFFFF</color>
     <color name="colorTexto">#FF000000</color>
     <color name="fondoDialog">#F3E5E7</color>
+
+    <!-- Here add color uCrop  -->
+    <color name="ucrop_color_statusbar">#91312D</color>
+    <color name="ucrop_color_widget_active">#91312D</color>
+
 </resources>

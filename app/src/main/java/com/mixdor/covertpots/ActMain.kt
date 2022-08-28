@@ -1,24 +1,81 @@
 package com.mixdor.covertpots
 
-import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.ekn.gruzer.gaugelibrary.ArcGauge
 import com.ekn.gruzer.gaugelibrary.Range
 import com.ekn.gruzer.gaugelibrary.contract.ValueFormatter
+import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import com.google.firebase.storage.ktx.component1
+import com.google.firebase.storage.ktx.component2
+import java.io.File
 
 class ActMain : AppCompatActivity() {
 
     private val dbFireStore = FirebaseFirestore.getInstance()
 
-    @SuppressLint("ResourceType")
+    private val startForProfileImageResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            val resultCode = result.resultCode
+            val data = result.data
+            val fotoPlant = findViewById<ImageView>(R.id.imgViewPlant)
+
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+
+                    val user = Firebase.auth.currentUser
+                    val uid = user?.uid
+
+                    val fav = obtenerFav()
+                    //Image Uri will not be null for RESULT_OK
+                    val fileUri = data?.data!!
+                    val nameFile = fileUri.lastPathSegment.toString()
+                    val extensionFile: String = nameFile.substring(nameFile.lastIndexOf("."))
+
+                    Log.i("File",uid.toString())
+
+                    fotoPlant.setImageURI(fileUri)
+
+                    val storage = Firebase.storage
+                    val storageRef = storage.reference
+
+                    val pathRef = storageRef.child("users/${uid.toString()}/plant$fav${extensionFile}")
+                    val uploadTask = pathRef.putFile(fileUri)
+
+                    // Register observers to listen for when the download is done or if it fails
+                    uploadTask
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Algo salio mal", Toast.LENGTH_SHORT).show()
+                            Log.e("Error",it.toString())
+                        }
+                        .addOnSuccessListener { taskSnapshot ->
+                            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+                        }
+                }
+                ImagePicker.RESULT_ERROR -> {
+                    Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    Toast.makeText(this, "Tarea Cancelada", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_CovertPots)
@@ -31,12 +88,7 @@ class ActMain : AppCompatActivity() {
         val btnConfig = findViewById<ImageButton>(R.id.btn_cofig)
         val btnRegar = findViewById<Button>(R.id.btnRegar)
         val btnFoto = findViewById<ImageButton>(R.id.btnFoto)
-        val fotoPlant = findViewById<ImageView>(R.id.iViewPlantaGr)
-
-        val textIlum = findViewById<TextView>(R.id.tVIlum)
-        val textHumdS = findViewById<TextView>(R.id.tVHumedad)
-        val textHumdA = findViewById<TextView>(R.id.tVHumAire)
-        val textTemp = findViewById<TextView>(R.id.tVTemperatura)
+        val fotoPlant = findViewById<ImageView>(R.id.imgViewPlant)
 
         val gaugeHumSuelo = findViewById<ArcGauge>(R.id.halfGauge)
         val gaugeHumAire = findViewById<ArcGauge>(R.id.halfGauge2)
@@ -132,24 +184,10 @@ class ActMain : AppCompatActivity() {
         gaugeTemp.setValueColor(ContextCompat.getColor(this, R.color.colorTexto))
 
 
-        val prefer : SharedPreferences = this.getSharedPreferences("Ajustes", Context.MODE_PRIVATE)
-        var fav : Int = -1
-        if(prefer.getInt("fav",-1)!=-1){
-            fav = prefer.getInt("fav",-1)
-        }
-        else{
-            dbFireStore.collection("usuarios").document(prefer.getString("correo","").toString()).get()
-                .addOnSuccessListener {
-                    fav = it.get("fav") as Int
-                }
-        }
+        val fav = obtenerFav()
 
         dbFireStore.collection("dispositivos").document(fav.toString()).get()
             .addOnSuccessListener {
-                textIlum.text = "${it.get("sIlumi").toString()} lux"
-                textHumdS.text = it.get("sHumedadAir").toString() + "%"
-                textHumdA.text = it.get("sHumedadSuelo").toString() + "%"
-                textTemp.text = it.get("sTemp").toString() + "°"
 
                 val valorHS = it.get("sHumedadSuelo").toString()
                 val valorHA = it.get("sHumedadAir").toString()
@@ -160,6 +198,50 @@ class ActMain : AppCompatActivity() {
                 gaugeHumAire.value = valorHA.toDouble()
                 gaugeIlum.value = valorI.toDouble()
                 gaugeTemp.value = valorT.toDouble()
+            }
+
+
+        val user = Firebase.auth.currentUser
+        val uid = user?.uid
+
+        val storage = Firebase.storage
+        val storageRef = storage.reference
+
+        val listRef = storage.reference.child("users/${uid.toString()}")
+
+        // You'll need to import com.google.firebase.storage.ktx.component1 and
+        // com.google.firebase.storage.ktx.component2
+        listRef.listAll()
+            .addOnSuccessListener { (items, prefixes) ->
+                prefixes.forEach { _ ->
+
+                }
+
+                items.forEach { item ->
+                    // All the items under listRef
+                    val namefile: String = item.name.substring(0,item.name.lastIndexOf("."))
+                    val exten: String = item.name.substring(item.name.lastIndexOf(".")+1)
+
+                    if(namefile=="plant$fav"){
+                        val pathString = item.path
+                        val localFile = File.createTempFile("images", exten)
+
+                        //Log.i("FireStorage",exten)
+                        val pathRef = storageRef.child(pathString)
+
+                        pathRef.getFile(localFile).addOnSuccessListener {
+                            fotoPlant.setImageURI(localFile.toUri())
+                        }.addOnFailureListener {
+                            Toast.makeText(this, "Algo salio mal", Toast.LENGTH_SHORT).show()
+                            Log.e("Error",it.toString())
+                        }
+                    }
+
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Algo salio mal", Toast.LENGTH_SHORT).show()
+                Log.e("Error",it.toString())
             }
 
 
@@ -178,12 +260,37 @@ class ActMain : AppCompatActivity() {
         }
 
         btnFoto.setOnClickListener{
-            Toast.makeText(this,"Foto",Toast.LENGTH_SHORT).show()
+
+            //dispatchTakePictureIntent()
+
+            ImagePicker.with(this)
+                .cropSquare()	//Crop square image, its same as crop(1f, 1f)
+                .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                .createIntent { intent ->
+                    startForProfileImageResult.launch(intent)
+                }
+
+            //Toast.makeText(this,"Foto",Toast.LENGTH_SHORT).show()
         }
 
-        //Prueba de color
-        fotoPlant.setOnClickListener{
-            fotoPlant.setColorFilter(ContextCompat.getColor(this, R.color.statusAmarillo), android.graphics.PorterDuff.Mode.SRC_IN)
-        }
     }
+
+    fun obtenerFav():Int{
+
+        val prefer : SharedPreferences = this.getSharedPreferences("Ajustes", Context.MODE_PRIVATE)
+        var fav : Int = -1
+        if(prefer.getInt("fav",-1)!=-1){
+            fav = prefer.getInt("fav",-1)
+        }
+        else{
+            dbFireStore.collection("usuarios").document(prefer.getString("correo","").toString()).get()
+                .addOnSuccessListener {
+                    fav = it.get("fav") as Int
+                }
+        }
+
+        return fav
+    }
+
 }

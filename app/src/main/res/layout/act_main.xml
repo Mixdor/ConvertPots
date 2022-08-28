@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:background="@null"
         android:padding="4dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,7 @@
         android:id="@+id/btn_cofig"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:background="@null"
         android:padding="3dp"
@@ -35,9 +35,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnRegar"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_more_plants">
@@ -92,32 +91,50 @@
                     app:srcCompat="@drawable/icon_humedad" />
 
                 <ImageView
-                    android:id="@+id/iViewPlantaGr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/bordeFotoPrincipal"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="-4dp"
+                    android:layout_marginTop="-4dp"
+                    android:layout_marginEnd="-4dp"
+                    android:layout_marginBottom="-4dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_view_for_image"
+                    app:layout_constraintEnd_toEndOf="@+id/card_view_for_image"
+                    app:layout_constraintStart_toStartOf="@+id/card_view_for_image"
+                    app:layout_constraintTop_toTopOf="@+id/card_view_for_image"
+                    app:srcCompat="@drawable/borde_camara" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_view_for_image"
+                    android:layout_width="240dp"
+                    android:layout_height="240dp"
+                    android:layout_marginTop="16dp"
+                    app:cardCornerRadius="120dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/foto_plant_borde"
-                    app:tint="#43915E" />
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/imgViewPlant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="@+id/iViewPlantaGr"
-                    app:layout_constraintEnd_toEndOf="@+id/iViewPlantaGr"
-                    app:layout_constraintStart_toStartOf="@+id/iViewPlantaGr"
-                    app:layout_constraintTop_toTopOf="@+id/iViewPlantaGr"
-                    app:srcCompat="@drawable/planta_defult" />
+                    <ImageView
+                        android:id="@+id/imgViewPlant"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/iViewPlantaGr"
+                        app:layout_constraintEnd_toEndOf="@+id/iViewPlantaGr"
+                        app:layout_constraintStart_toStartOf="@+id/iViewPlantaGr"
+                        app:layout_constraintTop_toTopOf="@+id/iViewPlantaGr"
+                        app:srcCompat="@drawable/planta_defult" />
 
-                <FrameLayout
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_button_foto"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_marginStart="-24dp"
-                    android:layout_marginTop="-24dp"
-                    app:layout_constraintStart_toEndOf="@+id/imgViewPlant"
-                    app:layout_constraintTop_toBottomOf="@+id/imgViewPlant">
+                    android:layout_marginStart="-54dp"
+                    android:layout_marginTop="-54dp"
+                    app:cardCornerRadius="24dp"
+                    app:layout_constraintStart_toEndOf="@+id/card_view_for_image"
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_for_image">
 
                     <ImageView
                         android:id="@+id/imageView8"
@@ -134,7 +151,7 @@
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         app:srcCompat="@drawable/camara" />
-                </FrameLayout>
+                </androidx.cardview.widget.CardView>
 
                 <com.ekn.gruzer.gaugelibrary.ArcGauge
                     android:id="@+id/halfGauge"
@@ -144,7 +161,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/halfGauge2"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/iViewPlantaGr" />
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_for_image" />
 
                 <com.ekn.gruzer.gaugelibrary.ArcGauge
                     android:id="@+id/halfGauge2"
@@ -154,13 +171,15 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/halfGauge"
-                    app:layout_constraintTop_toBottomOf="@+id/iViewPlantaGr" />
+                    app:layout_constraintTop_toBottomOf="@+id/card_view_for_image" />
 
                 <com.ekn.gruzer.gaugelibrary.ArcGauge
                     android:id="@+id/halfGauge3"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_marginTop="24dp"
+                    android:layout_marginBottom="90dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/halfGauge4"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -175,105 +194,6 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/halfGauge3"
                     app:layout_constraintTop_toBottomOf="@+id/halfGauge2" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="24dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/halfGauge3">
-
-                    <ImageView
-                        android:id="@+id/imageView9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintEnd_toStartOf="@+id/tVIlum"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/icon_iluminacion" />
-
-                    <ImageView
-                        android:id="@+id/imageView10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toStartOf="@+id/tVHumAire"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/tVIlum"
-                        app:layout_constraintTop_toTopOf="@+id/imageView9"
-                        app:srcCompat="@drawable/icon_aire" />
-
-                    <ImageView
-                        android:id="@+id/imageView11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toStartOf="@+id/tVHumedad"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/tVTemperatura"
-                        app:layout_constraintTop_toTopOf="@+id/imageView13"
-                        app:srcCompat="@drawable/icon_humedad" />
-
-                    <ImageView
-                        android:id="@+id/imageView13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintEnd_toStartOf="@+id/tVTemperatura"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView9"
-                        app:srcCompat="@drawable/icon_temperatura" />
-
-                    <TextView
-                        android:id="@+id/tVIlum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="32 klux"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView9"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView10"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/imageView9"
-                        app:layout_constraintTop_toTopOf="@+id/imageView9" />
-
-                    <TextView
-                        android:id="@+id/tVHumAire"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
-                        android:text="22%"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView10"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/imageView10"
-                        app:layout_constraintTop_toTopOf="@+id/imageView10" />
-
-                    <TextView
-                        android:id="@+id/tVTemperatura"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="36°"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView13"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView11"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/imageView13"
-                        app:layout_constraintTop_toTopOf="@+id/imageView13" />
-
-                    <TextView
-                        android:id="@+id/tVHumedad"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="30%"
-                        app:layout_constraintBottom_toBottomOf="@+id/imageView11"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageView11"
-                        app:layout_constraintTop_toTopOf="@+id/imageView11" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
