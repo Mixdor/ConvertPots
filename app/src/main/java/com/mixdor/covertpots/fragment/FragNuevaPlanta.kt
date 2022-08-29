@@ -9,25 +9,29 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.mixdor.covertpots.R
+import com.mixdor.covertpots.databinding.FragNuevaPlantaBinding
 
 class FragNuevaPlanta : DialogFragment() {
+
+    private var _binding: FragNuevaPlantaBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.frag_nueva_planta, container, false)
+        _binding = FragNuevaPlantaBinding.inflate(layoutInflater)
+        val view = binding.root
 
-        val toolbar = view.findViewById<androidx.appcompat.widget.Toolbar>(R.id.fracNuevaToolbar)
-        toolbar.title = "Agregar Nueva Planta"
-        toolbar.setNavigationOnClickListener {
+        binding.fracNuevaToolbar.title = "Agregar Nueva Planta"
+        binding.fracNuevaToolbar.setNavigationOnClickListener {
             dismiss()
         }
-        toolbar.setTitleTextAppearance(view.context, R.style.fullDialogTitle)
-        toolbar.setTitleTextColor(Color.WHITE)
-        toolbar.inflateMenu(R.menu.menu_dialog)
-        toolbar.setOnMenuItemClickListener {
+        binding.fracNuevaToolbar.setTitleTextAppearance(view.context, R.style.fullDialogTitle)
+        binding.fracNuevaToolbar.setTitleTextColor(Color.WHITE)
+        binding.fracNuevaToolbar.inflateMenu(R.menu.menu_dialog)
+        binding.fracNuevaToolbar.setOnMenuItemClickListener {
 
             //Guardar Nueva planta
 

@@ -12,48 +12,46 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.ekn.gruzer.gaugelibrary.ArcGauge
 import com.mixdor.covertpots.R
+import com.mixdor.covertpots.databinding.FragDetallesPlantaBinding
 import com.mixdor.covertpots.model.mPlanta
 
 class FragDetallesPlanta(plant: mPlanta) : DialogFragment() {
 
     private val planta:mPlanta = plant
-    /** The system calls this to get the DialogFragment's layout, regardless
-    of whether it's being displayed as a dialog or an embedded fragment. */
+
+    private var _binding: FragDetallesPlantaBinding? = null
+    private val binding get() = _binding!!
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout to use as dialog or embedded fragment
-        val view = inflater.inflate(R.layout.frag_detalles_planta, container, false)
-
-        val toolbar = view.findViewById<androidx.appcompat.widget.Toolbar>(R.id.fracToolbar)
-        val textSerial = view.findViewById<TextView>(R.id.fragTextVSerial)
-        val gause1 = view.findViewById<ArcGauge>(R.id.fraghalfGauge)
-        val gause2 = view.findViewById<ArcGauge>(R.id.fraghalfGauge2)
-        val gause3 = view.findViewById<ArcGauge>(R.id.fraghalfGauge3)
-        val gause4 = view.findViewById<ArcGauge>(R.id.fraghalfGauge4)
+        _binding = FragDetallesPlantaBinding.inflate(layoutInflater)
+        val view = binding.root
 
         val serialId = "#"+planta.id.toString()+"     "
-        textSerial.text = serialId
+        binding.fragTextVSerial.text = serialId
 
-        toolbar.title = planta.nombre
-        toolbar.setNavigationOnClickListener {
+        binding.fracToolbar.title = planta.nombre
+        binding.fracToolbar.setNavigationOnClickListener {
             dismiss()
         }
-        toolbar.setTitleTextAppearance(view.context, R.style.fullDialogTitle)
-        toolbar.setTitleTextColor(Color.WHITE)
+        binding.fracToolbar.setTitleTextAppearance(view.context, R.style.fullDialogTitle)
+        binding.fracToolbar.setTitleTextColor(Color.WHITE)
 
 
-        gause1.value = planta.sHumS.toDouble()
-        gause2.value = planta.sHumA.toDouble()
-        gause3.value = planta.sIlu.toDouble()
-        gause4.value = planta.sTemp.toDouble()
+        binding.fragGaugeHumS.value = planta.sHumS.toDouble()
+        binding.fragGaugeHumA.value = planta.sHumA.toDouble()
+        binding.fragGaugeIlum.value = planta.sIlu.toDouble()
+        binding.fragGaugeTemp.value = planta.sTemp.toDouble()
 
-        gause1.valueColor = ContextCompat.getColor(view.context, R.color.colorTexto)
-        gause2.valueColor = ContextCompat.getColor(view.context, R.color.colorTexto)
-        gause3.valueColor = ContextCompat.getColor(view.context, R.color.colorTexto)
-        gause4.valueColor = ContextCompat.getColor(view.context, R.color.colorTexto)
+        binding.fragGaugeHumS.valueColor = ContextCompat.getColor(view.context, R.color.colorTexto)
+        binding.fragGaugeHumA.valueColor = ContextCompat.getColor(view.context, R.color.colorTexto)
+        binding.fragGaugeIlum.valueColor = ContextCompat.getColor(view.context, R.color.colorTexto)
+        binding.fragGaugeTemp.valueColor = ContextCompat.getColor(view.context, R.color.colorTexto)
 
         return view
     }

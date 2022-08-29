@@ -3,11 +3,13 @@ package com.mixdor.covertpots.fragment
 import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
-import android.view.*
-import android.widget.Toast
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import androidx.fragment.app.DialogFragment
-import com.google.android.material.textfield.TextInputEditText
 import com.mixdor.covertpots.R
+import com.mixdor.covertpots.databinding.FragEditarPlantaBinding
 import com.mixdor.covertpots.model.mPlanta
 
 
@@ -15,28 +17,28 @@ class FragEditarPlanta(plant:mPlanta) : DialogFragment() {
 
     private val planta:mPlanta = plant
 
+    private var _binding: FragEditarPlantaBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.frag_editar_planta, container, false)
+        _binding = FragEditarPlantaBinding.inflate(layoutInflater)
+        val view = binding.root
 
-        val toolbar = view.findViewById<androidx.appcompat.widget.Toolbar>(R.id.fracEditarToolbar)
-        val txtSerial = view.findViewById<TextInputEditText>(R.id.FragEditEdNumSerie)
-        val txtNombre = view.findViewById<TextInputEditText>(R.id.FragEditEdNombrePlanta)
+        binding.FragEditEdNumSerie.setText(planta.id.toString())
+        binding.FragEditEdNombrePlanta.setText(planta.nombre)
 
-        txtSerial.setText(planta.id.toString())
-        txtNombre.setText(planta.nombre)
-
-        toolbar.title = "Editar Planta"
-        toolbar.setNavigationOnClickListener {
+        binding.fracEditarToolbar.title = "Editar Planta"
+        binding.fracEditarToolbar.setNavigationOnClickListener {
             dismiss()
         }
-        toolbar.setTitleTextAppearance(view.context, R.style.fullDialogTitle)
-        toolbar.setTitleTextColor(Color.WHITE)
-        toolbar.inflateMenu(R.menu.menu_dialog)
-        toolbar.setOnMenuItemClickListener {
+        binding.fracEditarToolbar.setTitleTextAppearance(view.context, R.style.fullDialogTitle)
+        binding.fracEditarToolbar.setTitleTextColor(Color.WHITE)
+        binding.fracEditarToolbar.inflateMenu(R.menu.menu_dialog)
+        binding.fracEditarToolbar.setOnMenuItemClickListener {
 
             //Guardar al editar planta
 

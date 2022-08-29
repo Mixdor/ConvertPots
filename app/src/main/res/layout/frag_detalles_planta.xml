@@ -46,40 +46,40 @@
                         android:id="@+id/imageView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="@+id/fraghalfGauge4"
-                        app:layout_constraintEnd_toEndOf="@+id/fraghalfGauge4"
+                        app:layout_constraintBottom_toBottomOf="@+id/fragGaugeTemp"
+                        app:layout_constraintEnd_toEndOf="@+id/fragGaugeTemp"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="@+id/fraghalfGauge4"
+                        app:layout_constraintStart_toStartOf="@+id/fragGaugeTemp"
                         app:srcCompat="@drawable/icon_temperatura" />
 
                     <ImageView
                         android:id="@+id/imageView5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="@+id/fraghalfGauge3"
-                        app:layout_constraintEnd_toEndOf="@+id/fraghalfGauge3"
+                        app:layout_constraintBottom_toBottomOf="@+id/fragGaugeIlum"
+                        app:layout_constraintEnd_toEndOf="@+id/fragGaugeIlum"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="@+id/fraghalfGauge3"
+                        app:layout_constraintStart_toStartOf="@+id/fragGaugeIlum"
                         app:srcCompat="@drawable/icon_iluminacion" />
 
                     <ImageView
                         android:id="@+id/imageView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="@+id/fraghalfGauge2"
-                        app:layout_constraintEnd_toEndOf="@+id/fraghalfGauge2"
+                        app:layout_constraintBottom_toBottomOf="@+id/fragGaugeHumA"
+                        app:layout_constraintEnd_toEndOf="@+id/fragGaugeHumA"
                         app:layout_constraintHorizontal_bias="0.529"
-                        app:layout_constraintStart_toStartOf="@+id/fraghalfGauge2"
+                        app:layout_constraintStart_toStartOf="@+id/fragGaugeHumA"
                         app:srcCompat="@drawable/icon_aire" />
 
                     <ImageView
                         android:id="@+id/imageView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="@+id/fraghalfGauge"
-                        app:layout_constraintEnd_toEndOf="@+id/fraghalfGauge"
+                        app:layout_constraintBottom_toBottomOf="@+id/fragGaugeHumS"
+                        app:layout_constraintEnd_toEndOf="@+id/fragGaugeHumS"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="@+id/fraghalfGauge"
+                        app:layout_constraintStart_toStartOf="@+id/fragGaugeHumS"
                         app:srcCompat="@drawable/icon_humedad" />
 
                     <ImageView
@@ -129,39 +129,39 @@
                     </FrameLayout>
 
                     <com.ekn.gruzer.gaugelibrary.ArcGauge
-                        android:id="@+id/fraghalfGauge"
+                        android:id="@+id/fragGaugeHumS"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_marginTop="32dp"
-                        app:layout_constraintEnd_toStartOf="@+id/fraghalfGauge2"
+                        app:layout_constraintEnd_toStartOf="@+id/fragGaugeHumA"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/iViewPlantaGr" />
 
                     <com.ekn.gruzer.gaugelibrary.ArcGauge
-                        android:id="@+id/fraghalfGauge2"
+                        android:id="@+id/fragGaugeHumA"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_marginTop="32dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/fraghalfGauge"
+                        app:layout_constraintStart_toEndOf="@+id/fragGaugeHumS"
                         app:layout_constraintTop_toBottomOf="@+id/iViewPlantaGr" />
 
                     <com.ekn.gruzer.gaugelibrary.ArcGauge
-                        android:id="@+id/fraghalfGauge3"
+                        android:id="@+id/fragGaugeIlum"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_marginTop="24dp"
                         android:layout_marginBottom="32dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/fraghalfGauge4"
+                        app:layout_constraintEnd_toStartOf="@+id/fragGaugeTemp"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
                     <com.ekn.gruzer.gaugelibrary.ArcGauge
-                        android:id="@+id/fraghalfGauge4"
+                        android:id="@+id/fragGaugeTemp"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
                         android:layout_marginTop="24dp"
@@ -169,8 +169,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/fraghalfGauge3"
-                        app:layout_constraintTop_toBottomOf="@+id/fraghalfGauge2" />
+                        app:layout_constraintStart_toEndOf="@+id/fragGaugeIlum"
+                        app:layout_constraintTop_toBottomOf="@+id/fragGaugeHumA" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
