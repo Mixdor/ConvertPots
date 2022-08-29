@@ -2,14 +2,13 @@ package com.mixdor.covertpots
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mixdor.covertpots.adapter.PlantasAdapter
+import com.mixdor.covertpots.databinding.ActMorePlantsBinding
 import com.mixdor.covertpots.fragment.FragDetallesPlanta
 import com.mixdor.covertpots.fragment.FragEditarPlanta
 import com.mixdor.covertpots.fragment.FragNuevaPlanta
@@ -17,32 +16,28 @@ import com.mixdor.covertpots.model.mPlanta
 
 class ActMorePlants : AppCompatActivity() {
 
-    /*private var adapterPlants: AdpPlants? = null*/
-    private var btnEdit: FloatingActionButton? = null
-    private var btnDelete: FloatingActionButton? = null
     private var selecionados:MutableList<mPlanta> = ArrayList()
+    private lateinit var binding: ActMorePlantsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_CovertPots)
-        setContentView(R.layout.act_more_plants)
 
-
-        val btnAgregar = findViewById<FloatingActionButton>(R.id.fBtnPlantAgregar)
-        btnEdit = findViewById(R.id.fBtnPlantEditar)
-        btnDelete = findViewById(R.id.fBtnPlantEliminar)
+        binding = ActMorePlantsBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         actualizarValores()
 
-        btnAgregar.setOnClickListener {
+        binding.fBtnPlantAgregar.setOnClickListener {
             showFragmentNuevaPlanta()
         }
 
-        btnEdit?.setOnClickListener {
+        binding.fBtnPlantEditar.setOnClickListener {
             showFragmentEditarPlanta(selecionados[0])
         }
 
-        btnDelete?.setOnClickListener {
+        binding.fBtnPlantEliminar.setOnClickListener {
 
             MaterialAlertDialogBuilder(this)
                 .setTitle("Remover planta")
@@ -89,7 +84,7 @@ class ActMorePlants : AppCompatActivity() {
     fun itemSelected(planta:mPlanta){
 
         if (selecionados.isEmpty()){
-            
+
             showFragmentDetalles(planta)
 
         }
@@ -103,17 +98,17 @@ class ActMorePlants : AppCompatActivity() {
             }
 
             if(selecionados.size>=1){
-                btnDelete?.visibility = View.VISIBLE
+                binding.fBtnPlantEliminar.visibility = View.VISIBLE
                 if(selecionados.size==1){
-                    btnEdit?.visibility = View.VISIBLE
+                    binding.fBtnPlantEditar.visibility = View.VISIBLE
                 }
                 else{
-                    btnEdit?.visibility = View.GONE
+                    binding.fBtnPlantEditar.visibility = View.GONE
                 }
             }
             else{
-                btnDelete?.visibility = View.GONE
-                btnEdit?.visibility = View.GONE
+                binding.fBtnPlantEliminar.visibility = View.GONE
+                binding.fBtnPlantEditar.visibility = View.GONE
             }
 
         }
@@ -131,17 +126,17 @@ class ActMorePlants : AppCompatActivity() {
         }
 
         if(selecionados.size>=1){
-            btnDelete?.visibility = View.VISIBLE
+            binding.fBtnPlantEliminar.visibility = View.VISIBLE
             if(selecionados.size==1){
-                btnEdit?.visibility = View.VISIBLE
+                binding.fBtnPlantEditar.visibility = View.VISIBLE
             }
             else{
-                btnEdit?.visibility = View.GONE
+                binding.fBtnPlantEditar.visibility = View.GONE
             }
         }
         else{
-            btnDelete?.visibility = View.GONE
-            btnEdit?.visibility = View.GONE
+            binding.fBtnPlantEliminar.visibility = View.GONE
+            binding.fBtnPlantEditar.visibility = View.GONE
         }
 
 

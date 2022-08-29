@@ -3,16 +3,22 @@ package com.mixdor.covertpots
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.mixdor.covertpots.databinding.ActInicioBinding
 
 class ActInicio : AppCompatActivity() {
+
+    private lateinit var binding: ActInicioBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_CovertPots)
-        setContentView(R.layout.act_inicio)
+
+        binding = ActInicioBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         val prefer : SharedPreferences = this.getSharedPreferences("Ajustes", Context.MODE_PRIVATE)
         if(prefer.getString("correo","")!=""){
@@ -35,16 +41,12 @@ class ActInicio : AppCompatActivity() {
         bundle.putString("mensaje","Integracion con firebase desde android completa")
         analytics.logEvent("InitScreen",bundle)
 
-
-        val btnRegister = findViewById<Button>(R.id.btnRegister)
-        val btnLogin = findViewById<Button>(R.id.btnLogin)
-
-        btnRegister.setOnClickListener {
+        binding.btnRegister.setOnClickListener {
             val intent = Intent(this@ActInicio, ActRegister::class.java)
             startActivity(intent)
         }
 
-        btnLogin.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             val intent = Intent(this@ActInicio, ActLogin::class.java)
             startActivity(intent)
         }

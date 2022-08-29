@@ -7,33 +7,32 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.widget.*
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import com.ekn.gruzer.gaugelibrary.ArcGauge
 import com.ekn.gruzer.gaugelibrary.Range
-import com.ekn.gruzer.gaugelibrary.contract.ValueFormatter
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.ktx.component1
 import com.google.firebase.storage.ktx.component2
+import com.google.firebase.storage.ktx.storage
+import com.mixdor.covertpots.databinding.ActMainBinding
 import java.io.File
 
 class ActMain : AppCompatActivity() {
 
     private val dbFireStore = FirebaseFirestore.getInstance()
+    private lateinit var binding: ActMainBinding
 
     private val startForProfileImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             val resultCode = result.resultCode
             val data = result.data
-            val fotoPlant = findViewById<ImageView>(R.id.imgViewPlant)
 
             when (resultCode) {
                 Activity.RESULT_OK -> {
@@ -49,7 +48,7 @@ class ActMain : AppCompatActivity() {
 
                     Log.i("File",uid.toString())
 
-                    fotoPlant.setImageURI(fileUri)
+                    binding.imgViewPlant.setImageURI(fileUri)
 
                     val storage = Firebase.storage
                     val storageRef = storage.reference
@@ -63,7 +62,7 @@ class ActMain : AppCompatActivity() {
                             Toast.makeText(this, "Algo salio mal", Toast.LENGTH_SHORT).show()
                             Log.e("Error",it.toString())
                         }
-                        .addOnSuccessListener { taskSnapshot ->
+                        .addOnSuccessListener { _ ->
                             // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
                         }
                 }
@@ -79,21 +78,13 @@ class ActMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_CovertPots)
-        setContentView(R.layout.act_main)
+
+        binding = ActMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         //val bundle: Bundle? = intent.extras
         //val serial: Int? = bundle?.getInt("serial")
-
-        val btnMore = findViewById<ImageButton>(R.id.btn_more_plants)
-        val btnConfig = findViewById<ImageButton>(R.id.btn_cofig)
-        val btnRegar = findViewById<Button>(R.id.btnRegar)
-        val btnFoto = findViewById<ImageButton>(R.id.btnFoto)
-        val fotoPlant = findViewById<ImageView>(R.id.imgViewPlant)
-
-        val gaugeHumSuelo = findViewById<ArcGauge>(R.id.halfGauge)
-        val gaugeHumAire = findViewById<ArcGauge>(R.id.halfGauge2)
-        val gaugeIlum = findViewById<ArcGauge>(R.id.halfGauge3)
-        val gaugeTemp = findViewById<ArcGauge>(R.id.halfGauge4)
 
         val rangeHS1 = Range(); val rangeHS2 = Range(); val rangeHS3 = Range()
         rangeHS1.color = Color.parseColor("#7D7AF5"); rangeHS1.from = 0.0; rangeHS1.to = 45.0
@@ -101,19 +92,19 @@ class ActMain : AppCompatActivity() {
         rangeHS3.color = Color.parseColor("#F56B22"); rangeHS3.from = 80.0; rangeHS3.to = 100.0
 
         //add color ranges to gauge
-        gaugeHumSuelo.addRange(rangeHS1)
-        gaugeHumSuelo.addRange(rangeHS2)
-        gaugeHumSuelo.addRange(rangeHS3)
+        binding.gaugeFavHumS.addRange(rangeHS1)
+        binding.gaugeFavHumS.addRange(rangeHS2)
+        binding.gaugeFavHumS.addRange(rangeHS3)
 
         //set min max
-        gaugeHumSuelo.minValue = 0.0
-        gaugeHumSuelo.maxValue = 100.0
+        binding.gaugeFavHumS.minValue = 0.0
+        binding.gaugeFavHumS.maxValue = 100.0
 
-        gaugeHumSuelo.setFormatter(ValueFormatter {
-            it.toInt().toString()+"%"
-        })
+        binding.gaugeFavHumS.setFormatter {
+            it.toInt().toString() + "%"
+        }
 
-        gaugeHumSuelo.setValueColor(ContextCompat.getColor(this, R.color.colorTexto))
+        binding.gaugeFavHumS.valueColor = ContextCompat.getColor(this, R.color.colorTexto)
 
         /////
 
@@ -123,19 +114,19 @@ class ActMain : AppCompatActivity() {
         rangeHA3.color = Color.parseColor("#F56B22"); rangeHA3.from = 80.0; rangeHA3.to = 100.0
 
         //add color ranges to gauge
-        gaugeHumAire.addRange(rangeHA1)
-        gaugeHumAire.addRange(rangeHA2)
-        gaugeHumAire.addRange(rangeHA3)
+        binding.gaugeFavHumA.addRange(rangeHA1)
+        binding.gaugeFavHumA.addRange(rangeHA2)
+        binding.gaugeFavHumA.addRange(rangeHA3)
 
         //set min max
-        gaugeHumAire.minValue = 0.0
-        gaugeHumAire.maxValue = 100.0
+        binding.gaugeFavHumA.minValue = 0.0
+        binding.gaugeFavHumA.maxValue = 100.0
 
-        gaugeHumAire.setFormatter(ValueFormatter {
-            it.toInt().toString()+"%"
-        })
+        binding.gaugeFavHumA.setFormatter {
+            it.toInt().toString() + "%"
+        }
 
-        gaugeHumAire.setValueColor(ContextCompat.getColor(this, R.color.colorTexto))
+        binding.gaugeFavHumA.valueColor = ContextCompat.getColor(this, R.color.colorTexto)
 
         ////////////
 
@@ -145,19 +136,19 @@ class ActMain : AppCompatActivity() {
         rangeI3.color = Color.parseColor("#F56B22"); rangeI3.from = 80.0; rangeI3.to = 100.0
 
         //add color ranges to gauge
-        gaugeIlum.addRange(rangeI1)
-        gaugeIlum.addRange(rangeI2)
-        gaugeIlum.addRange(rangeI3)
+        binding.gaugeFavIlum.addRange(rangeI1)
+        binding.gaugeFavIlum.addRange(rangeI2)
+        binding.gaugeFavIlum.addRange(rangeI3)
 
         //set min max
-        gaugeIlum.minValue = 0.0
-        gaugeIlum.maxValue = 100.0
+        binding.gaugeFavIlum.minValue = 0.0
+        binding.gaugeFavIlum.maxValue = 100.0
 
-        gaugeIlum.setFormatter(ValueFormatter {
-            it.toInt().toString()+" lux"
-        })
+        binding.gaugeFavIlum.setFormatter {
+            it.toInt().toString() + " lux"
+        }
 
-        gaugeIlum.setValueColor(ContextCompat.getColor(this, R.color.colorTexto))
+        binding.gaugeFavIlum.valueColor = ContextCompat.getColor(this, R.color.colorTexto)
 
         ////////////
 
@@ -169,19 +160,19 @@ class ActMain : AppCompatActivity() {
 
 
         //add color ranges to gauge
-        gaugeTemp.addRange(rangeT1)
-        gaugeTemp.addRange(rangeT2)
-        gaugeTemp.addRange(rangeT3)
+        binding.gaugeFavTemp.addRange(rangeT1)
+        binding.gaugeFavTemp.addRange(rangeT2)
+        binding.gaugeFavTemp.addRange(rangeT3)
 
         //set min max
-        gaugeTemp.minValue = 0.0
-        gaugeTemp.maxValue = 100.0
+        binding.gaugeFavTemp.minValue = 0.0
+        binding.gaugeFavTemp.maxValue = 100.0
 
-        gaugeTemp.setFormatter(ValueFormatter {
-            it.toInt().toString()+"°"
-        })
+        binding.gaugeFavTemp.setFormatter {
+            it.toInt().toString() + "°"
+        }
 
-        gaugeTemp.setValueColor(ContextCompat.getColor(this, R.color.colorTexto))
+        binding.gaugeFavTemp.valueColor = ContextCompat.getColor(this, R.color.colorTexto)
 
 
         val fav = obtenerFav()
@@ -194,10 +185,10 @@ class ActMain : AppCompatActivity() {
                 val valorI = it.get("sIlumi").toString()
                 val valorT = it.get("sTemp").toString()
 
-                gaugeHumSuelo.value = valorHS.toDouble()
-                gaugeHumAire.value = valorHA.toDouble()
-                gaugeIlum.value = valorI.toDouble()
-                gaugeTemp.value = valorT.toDouble()
+                binding.gaugeFavHumS.value = valorHS.toDouble()
+                binding.gaugeFavHumA.value = valorHA.toDouble()
+                binding.gaugeFavIlum.value = valorI.toDouble()
+                binding.gaugeFavTemp.value = valorT.toDouble()
             }
 
 
@@ -230,7 +221,7 @@ class ActMain : AppCompatActivity() {
                         val pathRef = storageRef.child(pathString)
 
                         pathRef.getFile(localFile).addOnSuccessListener {
-                            fotoPlant.setImageURI(localFile.toUri())
+                            binding.imgViewPlant.setImageURI(localFile.toUri())
                         }.addOnFailureListener {
                             Toast.makeText(this, "Algo salio mal", Toast.LENGTH_SHORT).show()
                             Log.e("Error",it.toString())
@@ -245,23 +236,21 @@ class ActMain : AppCompatActivity() {
             }
 
 
-        btnMore.setOnClickListener{
+        binding.btnMorePlants.setOnClickListener{
             val intent = Intent(this@ActMain,ActMorePlants::class.java)
             startActivity(intent)
         }
 
-        btnConfig.setOnClickListener{
+        binding.btnCofig.setOnClickListener{
             val intent = Intent(this@ActMain,ActAjustes::class.java)
             startActivity(intent)
         }
 
-        btnRegar.setOnClickListener{
+        binding.btnRegar.setOnClickListener{
             Toast.makeText(this,"Regando",Toast.LENGTH_SHORT).show()
         }
 
-        btnFoto.setOnClickListener{
-
-            //dispatchTakePictureIntent()
+        binding.btnFoto.setOnClickListener{
 
             ImagePicker.with(this)
                 .cropSquare()	//Crop square image, its same as crop(1f, 1f)

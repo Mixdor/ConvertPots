@@ -6,45 +6,40 @@ package com.mixdor.covertpots
  import android.text.Editable
  import android.text.TextWatcher
  import android.util.Log
- import android.widget.Button
  import android.widget.Toast
  import androidx.appcompat.app.AlertDialog
  import androidx.appcompat.app.AppCompatActivity
- import com.google.android.gms.tasks.OnCompleteListener
- import com.google.android.material.textfield.TextInputEditText
  import com.google.android.material.textfield.TextInputLayout
  import com.google.firebase.auth.FirebaseAuth
- import com.google.firebase.auth.FirebaseUser
  import com.google.firebase.auth.ktx.auth
  import com.google.firebase.ktx.Firebase
+ import com.mixdor.covertpots.databinding.ActRegisterBinding
 
 
 class ActRegister : AppCompatActivity() {
 
     private val myAuth = FirebaseAuth.getInstance()
+    private lateinit var binding: ActRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_CovertPots)
-        setContentView(R.layout.act_register)
+        
+        binding = ActRegisterBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        val btnRegister : Button = findViewById(R.id.btnRegistrarse)
-        val editEmail : TextInputEditText = findViewById(R.id.EditCorreoE)
-        val layoutEmail : TextInputLayout = findViewById(R.id.LayoutCorreoE)
-        val editPass : TextInputEditText = findViewById(R.id.EditRegisterPass)
+        binding.btnRegistrarse.setOnClickListener {
+            if(binding.EditCorreoE.text!!.isNotEmpty() && binding.EditRegisterPass.text!!.isNotEmpty()){
 
-        btnRegister.setOnClickListener {
-            if(editEmail.text!!.isNotEmpty() && editPass.text!!.isNotEmpty()){
-
-                if(validarMail(editEmail.text.toString(),layoutEmail)){
+                if(validarMail(binding.EditCorreoE.text.toString(),binding.LayoutCorreoE)){
 
                     myAuth.setLanguageCode("es")
 
-
                     myAuth
                         .createUserWithEmailAndPassword(
-                            editEmail.text.toString(),
-                            editPass.text.toString())
+                            binding.EditCorreoE.text.toString(),
+                            binding.EditRegisterPass.text.toString())
                         .addOnCompleteListener {
                             if(it.isSuccessful){
 
@@ -56,7 +51,7 @@ class ActRegister : AppCompatActivity() {
                                         }
                                     }
 
-                                goToLogin(editEmail.text.toString())
+                                goToLogin(binding.EditCorreoE.text.toString())
 
                             }
                             else{
@@ -72,11 +67,9 @@ class ActRegister : AppCompatActivity() {
             }
         }
 
-
-
-        editEmail.addTextChangedListener ( object : TextWatcher{
+        binding.EditCorreoE.addTextChangedListener ( object : TextWatcher{
                 override fun afterTextChanged(s: Editable?) {
-                    layoutEmail.error = ""
+                    binding.LayoutCorreoE.error = ""
                 }
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -87,7 +80,7 @@ class ActRegister : AppCompatActivity() {
 
     private fun validarMail(mail: String, layoutMail: TextInputLayout):Boolean {
 
-        val emailPatron = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$".toRegex()
+        val emailPatron = "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}\$".toRegex()
         val valido = mail.trim().matches(emailPatron)
 
         if(!valido){
@@ -96,7 +89,7 @@ class ActRegister : AppCompatActivity() {
         else{
             layoutMail.error = ""
         }
-        return valido;
+        return valido
     }
 
     private fun showAlert(){

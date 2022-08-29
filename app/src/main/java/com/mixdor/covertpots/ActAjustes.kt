@@ -8,28 +8,31 @@ import android.os.Bundle
 import android.widget.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.mixdor.covertpots.databinding.ActAjustesBinding
 
 class ActAjustes : AppCompatActivity() {
+
+    private lateinit var binding: ActAjustesBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_CovertPots)
-        setContentView(R.layout.act_ajustes)
+
+        binding = ActAjustesBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         val prefer : SharedPreferences = this.getSharedPreferences("Ajustes", Context.MODE_PRIVATE)
         val myCorreo = prefer.getString("correo",getString(R.string.correoDefault))
 
-        val textCorreo = findViewById<TextView>(R.id.tVCorreoCuenta)
-        val btnLogout = findViewById<Button>(R.id.btnLogout)
-        val btnAbout = findViewById<Button>(R.id.btnInfo)
+        binding.tVCorreoCuenta.text = myCorreo
 
-        textCorreo.text = myCorreo
-
-        btnAbout.setOnClickListener {
+        binding.btnInfo.setOnClickListener {
             val intent = Intent(this@ActAjustes, ActAbout::class.java)
             startActivity(intent)
         }
 
-        btnLogout.setOnClickListener {
+        binding.btnLogout.setOnClickListener {
 
             //Limpia las preferencias
             val editor: SharedPreferences.Editor = prefer.edit()
@@ -48,17 +51,15 @@ class ActAjustes : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        val autoTemp = findViewById<AutoCompleteTextView>(R.id.AutoComplTemperatura)
-
         val uniTemp = resources.getStringArray(R.array.uniTemperatura)
         val adapterTemp = ArrayAdapter(this,R.layout.dropdown_item,uniTemp)
-        autoTemp.setAdapter(adapterTemp)
+        binding.AutoComplTemperatura.setAdapter(adapterTemp)
 
         val prefer : SharedPreferences = this.getSharedPreferences("Ajustes", Context.MODE_PRIVATE)
         val myUnitempe = prefer.getInt("temp",0)
-        autoTemp.setText(autoTemp.adapter.getItem(myUnitempe).toString(),false)
+        binding.AutoComplTemperatura.setText(binding.AutoComplTemperatura.adapter.getItem(myUnitempe).toString(),false)
 
-        autoTemp.setOnItemClickListener{ _, _, position, _ ->
+        binding.AutoComplTemperatura.setOnItemClickListener{ _, _, position, _ ->
             val editor: SharedPreferences.Editor = prefer.edit()
             editor.putInt("temp",position)
             editor.apply()

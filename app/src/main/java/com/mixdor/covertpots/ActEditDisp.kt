@@ -3,92 +3,85 @@ package com.mixdor.covertpots
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
+import com.mixdor.covertpots.databinding.ActEditDispBinding
 
 class ActEditDisp : AppCompatActivity() {
 
     private val dbFireStore = FirebaseFirestore.getInstance()
+    private lateinit var binding: ActEditDispBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_CovertPots)
-        setContentView(R.layout.act_edit_disp)
+
+        binding = ActEditDispBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         val bundle: Bundle? = intent.extras
         val serial: String? = bundle?.getString("serial")
         val pass: String? = bundle?.getString("pass")
         
-        var tipo = -1;
+        var tipo = -1
 
-        val txtSerial = findViewById<TextInputEditText>(R.id.EditEdNumSerie)
-        val txtNamePlant = findViewById<TextInputEditText>(R.id.EditEdNombrePlanta)
-        val txtTipoPlant = findViewById<AutoCompleteTextView>(R.id.AtoCompTipoPlanta)
-        val txtpass = findViewById<TextInputEditText>(R.id.EditEdPass)
-        val txtpassNew = findViewById<TextInputEditText>(R.id.EditEdPassNew)
-
-        val btnHecho = findViewById<Button>(R.id.btnHechoEdit)
-        val swCambiarPass = findViewById<Switch>(R.id.swCambiar)
-        val tFCambiarPAss = findViewById<TextInputLayout>(R.id.LayoutEdPassNew)
-
-        txtSerial.setText(serial)
+        binding.EditEdNumSerie.setText(serial)
 
         val prefer : SharedPreferences = this.getSharedPreferences("Ajustes", Context.MODE_PRIVATE)
 
         if (prefer.getInt("fav",-1) != -1){
             dbFireStore.collection("dispositivo").document(serial.toString()).get()
                 .addOnSuccessListener {
-                    txtNamePlant.setText(it.get("nombre") as String)
-                    txtTipoPlant.setSelection(it.get("tipoPlant") as Int)
+                    binding.EditEdNombrePlanta.setText(it.get("nombre") as String)
+                    binding.AtoCompTipoPlanta.setSelection(it.get("tipoPlant") as Int)
                 }
         }
 
-        txtpass.setText(pass)
+        binding.EditEdPass.setText(pass)
 
-        swCambiarPass.setOnCheckedChangeListener { _, checked ->
+        binding.swCambiar.setOnCheckedChangeListener { _, checked ->
             if(checked){
-                tFCambiarPAss.visibility = View.VISIBLE
+                binding.LayoutEdPassNew.visibility = View.VISIBLE
             }
             else{
-                tFCambiarPAss.visibility = View.GONE
+                binding.LayoutEdPassNew.visibility = View.GONE
             }
         }
 
-        txtTipoPlant.setOnItemClickListener { _, _, position, _ ->
+        binding.AtoCompTipoPlanta.setOnItemClickListener { _, _, position, _ ->
             tipo = position
             //println("OnItem = $position")
         }
 
-        btnHecho.setOnClickListener{
+        binding.btnHechoEdit.setOnClickListener{
 
-            if(swCambiarPass.isChecked){
+            if(binding.swCambiar.isChecked){
                 //println(tipo)
-                if(txtNamePlant.text!!.isNotEmpty() && tipo != -1 &&
-                    txtpass.text!!.isNotEmpty() && txtpassNew.text!!.isNotEmpty()){
+                if(binding.EditEdNombrePlanta.text!!.isNotEmpty() && tipo != -1 &&
+                    binding.EditEdPass.text!!.isNotEmpty() && binding.EditEdPassNew.text!!.isNotEmpty()){
 
-                    dbFireStore.collection("dispositivos").document(txtSerial.text.toString()).get()
+                    dbFireStore.collection("dispositivos").document(binding.EditEdNumSerie.text.toString()).get()
                         .addOnSuccessListener{
-                            if (it.get("pass") as String? == txtpass.text.toString()){
+                            if (it.get("pass") as String? == binding.EditEdPass.text.toString()){
 
-                                dbFireStore.collection("dispositivos").document(txtSerial.text.toString())
-                                    .update(mapOf("nombre" to txtNamePlant.text.toString(),
+                                dbFireStore.collection("dispositivos").document(binding.EditEdNumSerie.text.toString())
+                                    .update(mapOf("nombre" to binding.EditEdNombrePlanta.text.toString(),
                                         "tipoPlant" to tipo,
-                                        "pass" to txtpassNew.text.toString()
+                                        "pass" to binding.EditEdPassNew.text.toString()
                                     ))
 
                                 val editor: SharedPreferences.Editor = prefer.edit()
-                                editor.putInt("fav",Integer.valueOf(txtSerial.text.toString()))
+                                editor.putInt("fav",Integer.valueOf(binding.EditEdNumSerie.text.toString()))
                                 editor.apply()
 
-                                gotoMAin(Integer.valueOf(txtSerial.text.toString()))
+                                gotoMAin(Integer.valueOf(binding.EditEdNumSerie.text.toString()))
                             }
                             else{
                                 showAlert()
@@ -102,23 +95,23 @@ class ActEditDisp : AppCompatActivity() {
 
             }
             else{
-                if(txtNamePlant.text!!.isNotEmpty() && tipo != -1 &&
-                    txtpass.text!!.isNotEmpty()){
+                if(binding.EditEdNombrePlanta.text!!.isNotEmpty() && tipo != -1 &&
+                    binding.EditEdPass.text!!.isNotEmpty()){
 
-                    dbFireStore.collection("dispositivos").document(txtSerial.text.toString()).get()
+                    dbFireStore.collection("dispositivos").document(binding.EditEdNumSerie.text.toString()).get()
                         .addOnSuccessListener{
-                            if (it.get("pass") as String? == txtpass.text.toString()){
+                            if (it.get("pass") as String? == binding.EditEdPass.text.toString()){
 
-                                dbFireStore.collection("dispositivos").document(txtSerial.text.toString())
-                                    .update(mapOf("nombre" to txtNamePlant.text.toString(),
+                                dbFireStore.collection("dispositivos").document(binding.EditEdNumSerie.text.toString())
+                                    .update(mapOf("nombre" to binding.EditEdNombrePlanta.text.toString(),
                                         "tipoPlant" to tipo
                                     ))
 
                                 val editor: SharedPreferences.Editor = prefer.edit()
-                                editor.putInt("fav",Integer.valueOf(txtSerial.text.toString()))
+                                editor.putInt("fav",Integer.valueOf(binding.EditEdNumSerie.text.toString()))
                                 editor.apply()
 
-                                gotoMAin(Integer.valueOf(txtSerial.text.toString()))
+                                gotoMAin(Integer.valueOf(binding.EditEdNumSerie.text.toString()))
                             }
                             else{
                                 showAlert()

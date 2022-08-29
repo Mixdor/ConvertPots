@@ -4,54 +4,49 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.textfield.TextInputEditText
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.mixdor.covertpots.databinding.ActLoginBinding
 
 class ActLogin : AppCompatActivity() {
 
     private val db = FirebaseFirestore.getInstance()
+    private lateinit var binding: ActLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_CovertPots)
-        setContentView(R.layout.act_login)
-        
 
-        val btnLogin = findViewById<Button>(R.id.btnIniciarSesion)
-        val editCorreo = findViewById<TextInputEditText>(R.id.EditLoginCorreo)
-        val layoutEmail : TextInputLayout = findViewById(R.id.LayoutCorreoLogin)
-        val editPass = findViewById<TextInputEditText>(R.id.EditLoginPass)
-        val olvido = findViewById<TextView>(R.id.tVOlvidoPass)
+        binding = ActLoginBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         val bundle: Bundle? = intent.extras
         val correo: String? = bundle?.getString("correo")
 
-        editCorreo.setText(correo)
+        binding.EditLoginCorreo.setText(correo)
 
-        btnLogin.setOnClickListener{
+        binding.btnIniciarSesion.setOnClickListener{
 
-            if(editCorreo.text!!.isNotEmpty() && editPass.text!!.isNotEmpty()){
+            if(binding.EditLoginCorreo.text!!.isNotEmpty() && binding.EditLoginPass.text!!.isNotEmpty()){
 
-                if(validarMail(editCorreo.text.toString(),layoutEmail)){
+                if(validarMail(binding.EditLoginCorreo.text.toString(),binding.LayoutCorreoLogin)){
 
                     FirebaseAuth.getInstance()
                         .signInWithEmailAndPassword(
-                            editCorreo.text.toString(),
-                            editPass.text.toString())
+                            binding.EditLoginCorreo.text.toString(),
+                            binding.EditLoginPass.text.toString())
                         .addOnCompleteListener {
                             if(it.isSuccessful){
 
@@ -59,14 +54,14 @@ class ActLogin : AppCompatActivity() {
 
                                 if(userFire?.isEmailVerified == true){
 
-                                    db.collection("usuarios").document(editCorreo.text.toString())
+                                    db.collection("usuarios").document(binding.EditLoginCorreo.text.toString())
 
                                     val prefer : SharedPreferences = this.getSharedPreferences("Ajustes", Context.MODE_PRIVATE)
                                     val editor: SharedPreferences.Editor = prefer.edit()
-                                    editor.putString("correo",editCorreo.text.toString())
+                                    editor.putString("correo",binding.EditLoginCorreo.text.toString())
                                     editor.apply()
 
-                                    goToVincular(editCorreo.text.toString())
+                                    goToVincular(binding.EditLoginCorreo.text.toString())
                                 }
                                 else{
                                     Toast.makeText(this,getString(R.string.faltaVerifCorreo),Toast.LENGTH_SHORT)
@@ -86,19 +81,19 @@ class ActLogin : AppCompatActivity() {
 
         }
 
-        editCorreo.addTextChangedListener ( object : TextWatcher {
+        binding.EditLoginCorreo.addTextChangedListener ( object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                layoutEmail.error = ""
+                binding.LayoutCorreoLogin.error = ""
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         }
         )
 
-        olvido.setOnClickListener{
+        binding.tVOlvidoPass.setOnClickListener{
 
-            if(editCorreo.text!!.isNotEmpty()){
-                val emailAddress = editCorreo.text.toString()
+            if(binding.EditLoginCorreo.text!!.isNotEmpty()){
+                val emailAddress = binding.EditLoginCorreo.text.toString()
 
                 Firebase.auth.sendPasswordResetEmail(emailAddress)
                     .addOnCompleteListener { task ->
@@ -114,7 +109,7 @@ class ActLogin : AppCompatActivity() {
 
     private fun validarMail(mail: String, layoutMail: TextInputLayout):Boolean {
 
-        val emailPatron = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$".toRegex()
+        val emailPatron = "^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}\$".toRegex()
         val valido = mail.trim().matches(emailPatron)
 
         if(!valido){
@@ -123,7 +118,7 @@ class ActLogin : AppCompatActivity() {
         else{
             layoutMail.error = ""
         }
-        return valido;
+        return valido
     }
 
     private fun showAlert(){
