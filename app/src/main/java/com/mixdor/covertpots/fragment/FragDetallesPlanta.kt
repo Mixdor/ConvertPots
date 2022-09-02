@@ -7,10 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import com.ekn.gruzer.gaugelibrary.ArcGauge
 import com.mixdor.covertpots.R
 import com.mixdor.covertpots.databinding.FragDetallesPlantaBinding
 import com.mixdor.covertpots.model.mPlanta
@@ -30,7 +28,11 @@ class FragDetallesPlanta(plant: mPlanta) : DialogFragment() {
     ): View {
         // Inflate the layout to use as dialog or embedded fragment
         _binding = FragDetallesPlantaBinding.inflate(layoutInflater)
-        val view = binding.root
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val serialId = "#"+planta.id.toString()+"     "
         binding.fragTextVSerial.text = serialId
@@ -53,7 +55,6 @@ class FragDetallesPlanta(plant: mPlanta) : DialogFragment() {
         binding.fragGaugeIlum.valueColor = ContextCompat.getColor(view.context, R.color.colorTexto)
         binding.fragGaugeTemp.valueColor = ContextCompat.getColor(view.context, R.color.colorTexto)
 
-        return view
     }
 
     /** The system calls this only when creating the layout in a dialog. */

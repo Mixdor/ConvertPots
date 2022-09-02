@@ -22,7 +22,12 @@ class FragNuevaPlanta : DialogFragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragNuevaPlantaBinding.inflate(layoutInflater)
-        val view = binding.root
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.fracNuevaToolbar.title = "Agregar Nueva Planta"
         binding.fracNuevaToolbar.setNavigationOnClickListener {
@@ -37,8 +42,6 @@ class FragNuevaPlanta : DialogFragment() {
 
             true
         }
-
-        return view
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

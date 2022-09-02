@@ -26,7 +26,11 @@ class FragEditarPlanta(plant:mPlanta) : DialogFragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragEditarPlantaBinding.inflate(layoutInflater)
-        val view = binding.root
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.FragEditEdNumSerie.setText(planta.id.toString())
         binding.FragEditEdNombrePlanta.setText(planta.nombre)
@@ -44,8 +48,6 @@ class FragEditarPlanta(plant:mPlanta) : DialogFragment() {
 
             true
         }
-
-        return view
     }
 
     /** The system calls this only when creating the layout in a dialog. */
