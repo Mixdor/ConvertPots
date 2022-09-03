@@ -4,18 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.mixdor.covertpots.databinding.ActEditDispBinding
 
 class ActEditDisp : AppCompatActivity() {
 
-    private val dbFireStore = FirebaseFirestore.getInstance()
     private lateinit var binding: ActEditDispBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +36,20 @@ class ActEditDisp : AppCompatActivity() {
 
         val prefer : SharedPreferences = this.getSharedPreferences("Ajustes", Context.MODE_PRIVATE)
 
+        val database = Firebase.database
+        val user = Firebase.auth.currentUser
+        val uid = user?.uid
+
+        val ref = database.getReference("users/${uid}/plants/${prefer.getInt("fav",-1)}")
+
         if (prefer.getInt("fav",-1) != -1){
-            dbFireStore.collection("dispositivo").document(serial.toString()).get()
-                .addOnSuccessListener {
-                    binding.EditEdNombrePlanta.setText(it.get("nombre") as String)
-                    binding.AtoCompTipoPlanta.setSelection(it.get("tipoPlant") as Int)
-                }
+
+            ref.child("name").get().addOnSuccessListener {
+                binding.EditEdNombrePlanta.setText(it.value as String)
+            }
+            ref.child("type").get().addOnSuccessListener {
+                binding.AtoCompTipoPlanta.setSelection(Integer.valueOf(it.value.toString()))
+            }
         }
 
         binding.EditEdPass.setText(pass)
@@ -62,67 +70,21 @@ class ActEditDisp : AppCompatActivity() {
 
         binding.btnHechoEdit.setOnClickListener{
 
-            if(binding.swCambiar.isChecked){
-                //println(tipo)
-                if(binding.EditEdNombrePlanta.text!!.isNotEmpty() && tipo != -1 &&
-                    binding.EditEdPass.text!!.isNotEmpty() && binding.EditEdPassNew.text!!.isNotEmpty()){
-
-                    dbFireStore.collection("dispositivos").document(binding.EditEdNumSerie.text.toString()).get()
-                        .addOnSuccessListener{
-                            if (it.get("pass") as String? == binding.EditEdPass.text.toString()){
-
-                                dbFireStore.collection("dispositivos").document(binding.EditEdNumSerie.text.toString())
-                                    .update(mapOf("nombre" to binding.EditEdNombrePlanta.text.toString(),
-                                        "tipoPlant" to tipo,
-                                        "pass" to binding.EditEdPassNew.text.toString()
-                                    ))
-
-                                val editor: SharedPreferences.Editor = prefer.edit()
-                                editor.putInt("fav",Integer.valueOf(binding.EditEdNumSerie.text.toString()))
-                                editor.apply()
-
-                                gotoMAin(Integer.valueOf(binding.EditEdNumSerie.text.toString()))
-                            }
-                            else{
-                                showAlert()
-                            }
-                        }
+            ref.child("name").setValue(binding.EditEdNombrePlanta.text.toString())
+                .addOnFailureListener {
+                    Log.e("Firebase",it.toString())
                 }
-                else{
-                    Toast.makeText(this,getString(R.string.faltanDatos), Toast.LENGTH_SHORT)
-                        .show()
+            ref.child("type").setValue(tipo)
+                .addOnFailureListener {
+                    Log.e("Firebase",it.toString())
                 }
 
-            }
-            else{
-                if(binding.EditEdNombrePlanta.text!!.isNotEmpty() && tipo != -1 &&
-                    binding.EditEdPass.text!!.isNotEmpty()){
+            val editor: SharedPreferences.Editor = prefer.edit()
+            editor.putInt("fav",Integer.valueOf(binding.EditEdNumSerie.text.toString()))
+            editor.apply()
 
-                    dbFireStore.collection("dispositivos").document(binding.EditEdNumSerie.text.toString()).get()
-                        .addOnSuccessListener{
-                            if (it.get("pass") as String? == binding.EditEdPass.text.toString()){
+            gotoMAin(Integer.valueOf(binding.EditEdNumSerie.text.toString()))
 
-                                dbFireStore.collection("dispositivos").document(binding.EditEdNumSerie.text.toString())
-                                    .update(mapOf("nombre" to binding.EditEdNombrePlanta.text.toString(),
-                                        "tipoPlant" to tipo
-                                    ))
-
-                                val editor: SharedPreferences.Editor = prefer.edit()
-                                editor.putInt("fav",Integer.valueOf(binding.EditEdNumSerie.text.toString()))
-                                editor.apply()
-
-                                gotoMAin(Integer.valueOf(binding.EditEdNumSerie.text.toString()))
-                            }
-                            else{
-                                showAlert()
-                            }
-                        }
-                }
-                else{
-                    Toast.makeText(this,getString(R.string.faltanDatos), Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
         }
     }
 
@@ -135,15 +97,6 @@ class ActEditDisp : AppCompatActivity() {
         val adapterTemp = ArrayAdapter(this@ActEditDisp,R.layout.dropdown_item,uniTipo)
         autoTipo.setAdapter(adapterTemp)
 
-    }
-
-    private fun showAlert(){
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(getString(R.string.error))
-        builder.setMessage(getString(R.string.dispNoEncontrado))
-        builder.setPositiveButton(getString(R.string.aceptar),null)
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
     }
 
     private fun gotoMAin(numero:Int){

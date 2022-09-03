@@ -15,13 +15,11 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.mixdor.covertpots.databinding.ActLoginBinding
 
 class ActLogin : AppCompatActivity() {
 
-    private val db = FirebaseFirestore.getInstance()
     private lateinit var binding: ActLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,13 +51,6 @@ class ActLogin : AppCompatActivity() {
                                 val userFire: FirebaseUser? = Firebase.auth.currentUser
 
                                 if(userFire?.isEmailVerified == true){
-
-                                    db.collection("usuarios").document(binding.EditLoginCorreo.text.toString())
-
-                                    val prefer : SharedPreferences = this.getSharedPreferences("Ajustes", Context.MODE_PRIVATE)
-                                    val editor: SharedPreferences.Editor = prefer.edit()
-                                    editor.putString("correo",binding.EditLoginCorreo.text.toString())
-                                    editor.apply()
 
                                     goToVincular(binding.EditLoginCorreo.text.toString())
                                 }

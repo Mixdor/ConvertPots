@@ -4,8 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.mixdor.covertpots.databinding.ActInicioBinding
 
 class ActInicio : AppCompatActivity() {
@@ -21,18 +25,36 @@ class ActInicio : AppCompatActivity() {
         setContentView(view)
 
         val prefer : SharedPreferences = this.getSharedPreferences("Ajustes", Context.MODE_PRIVATE)
-        if(prefer.getString("correo","")!=""){
-            if(prefer.getInt("fav",-1)!=-1){
-                val intent = Intent(this@ActInicio, ActMain::class.java)
-                startActivity(intent)
-                finishAffinity()
-            }
-            else{
-                val intent = Intent(this@ActInicio, ActVincular::class.java)
-                startActivity(intent)
-                finishAffinity()
-            }
+        if(prefer.getInt("fav",-1)!=-1){
+            Log.i("Entro","Por preferncias")
+            val intent = Intent(this@ActInicio, ActMain::class.java)
+            startActivity(intent)
+            finishAffinity()
+        }
+        else{
+            val database = Firebase.database
+            val user = Firebase.auth.currentUser
+            val uid = user?.uid
+            val refPath = database.getReference("users/${uid}")
 
+            refPath.child("fav").get()
+                .addOnSuccessListener {
+                    if(it.exists()){
+                        Log.i("Entro","Por realtime")
+                        val intent = Intent(this@ActInicio, ActMain::class.java)
+                        startActivity(intent)
+                        finishAffinity()
+                    }
+                    else{
+                        Log.i("Entro","Por Descarte")
+                        val intent = Intent(this@ActInicio, ActVincular::class.java)
+                        startActivity(intent)
+                        finishAffinity()
+                    }
+                }
+                .addOnFailureListener {
+                    Log.e("Realtime DB",it.toString())
+                }
         }
 
         //Evento analytics

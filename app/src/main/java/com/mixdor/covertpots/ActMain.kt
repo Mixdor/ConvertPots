@@ -1,9 +1,7 @@
 package com.mixdor.covertpots
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +14,7 @@ import androidx.core.net.toUri
 import com.ekn.gruzer.gaugelibrary.Range
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.component1
 import com.google.firebase.storage.ktx.component2
@@ -26,7 +24,6 @@ import java.io.File
 
 class ActMain : AppCompatActivity() {
 
-    private val dbFireStore = FirebaseFirestore.getInstance()
     private lateinit var binding: ActMainBinding
 
     private val startForProfileImageResult =
@@ -40,7 +37,6 @@ class ActMain : AppCompatActivity() {
                     val user = Firebase.auth.currentUser
                     val uid = user?.uid
 
-                    val fav = obtenerFav()
                     //Image Uri will not be null for RESULT_OK
                     val fileUri = data?.data!!
                     val nameFile = fileUri.lastPathSegment.toString()
@@ -52,18 +48,25 @@ class ActMain : AppCompatActivity() {
 
                     val storage = Firebase.storage
                     val storageRef = storage.reference
+                    val database = Firebase.database
+                    val referencia = database.getReference("users")
 
-                    val pathRef = storageRef.child("users/${uid.toString()}/plant$fav${extensionFile}")
-                    val uploadTask = pathRef.putFile(fileUri)
+                    referencia.child(uid.toString()).child("fav").get()
+                        .addOnSuccessListener {
+                            val fav = it.value.toString().toInt()
 
-                    // Register observers to listen for when the download is done or if it fails
-                    uploadTask
-                        .addOnFailureListener {
-                            Toast.makeText(this, "Algo salio mal", Toast.LENGTH_SHORT).show()
-                            Log.e("Error",it.toString())
-                        }
-                        .addOnSuccessListener { _ ->
-                            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+                            val pathRef = storageRef.child("users/${uid.toString()}/plant$fav${extensionFile}")
+                            val uploadTask = pathRef.putFile(fileUri)
+
+                            // Register observers to listen for when the download is done or if it fails
+                            uploadTask
+                                .addOnFailureListener { it2 ->
+                                    Toast.makeText(this, "Algo salio mal", Toast.LENGTH_SHORT).show()
+                                    Log.e("Error",it2.toString())
+                                }
+                                .addOnSuccessListener { _ ->
+                                    // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+                                }
                         }
                 }
                 ImagePicker.RESULT_ERROR -> {
@@ -174,64 +177,79 @@ class ActMain : AppCompatActivity() {
 
         binding.gaugeFavTemp.valueColor = ContextCompat.getColor(this, R.color.colorTexto)
 
-
-        val fav = obtenerFav()
-
-        dbFireStore.collection("dispositivos").document(fav.toString()).get()
-            .addOnSuccessListener {
-
-                val valorHS = it.get("sHumedadSuelo").toString()
-                val valorHA = it.get("sHumedadAir").toString()
-                val valorI = it.get("sIlumi").toString()
-                val valorT = it.get("sTemp").toString()
-
-                binding.gaugeFavHumS.value = valorHS.toDouble()
-                binding.gaugeFavHumA.value = valorHA.toDouble()
-                binding.gaugeFavIlum.value = valorI.toDouble()
-                binding.gaugeFavTemp.value = valorT.toDouble()
-            }
-
-
+        val database = Firebase.database
         val user = Firebase.auth.currentUser
         val uid = user?.uid
 
-        val storage = Firebase.storage
-        val storageRef = storage.reference
+        val referencia = database.getReference("users")
 
-        val listRef = storage.reference.child("users/${uid.toString()}")
+        referencia.child(uid.toString()).child("fav").get()
+            .addOnSuccessListener {
+                val fav = it.value.toString().toInt()
 
-        // You'll need to import com.google.firebase.storage.ktx.component1 and
-        // com.google.firebase.storage.ktx.component2
-        listRef.listAll()
-            .addOnSuccessListener { (items, prefixes) ->
-                prefixes.forEach { _ ->
+                val ref = database.getReference("users/${uid}/plants/${fav}")
 
+                ref.child("sHumA").get().addOnSuccessListener { it2 ->
+                    val sensor= it2.value.toString().toDouble()
+                    binding.gaugeFavHumA.value = sensor
+                }
+                ref.child("sHumS").get().addOnSuccessListener { it2 ->
+                    val sensor= it2.value.toString()
+                    binding.gaugeFavHumS.value = sensor.toDouble()
+                }
+                ref.child("sIlum").get().addOnSuccessListener { it2 ->
+                    val sensor= it2.value.toString()
+                    binding.gaugeFavIlum.value = sensor.toDouble()
+                }
+                ref.child("sTemp").get().addOnSuccessListener { it2 ->
+                    val sensor= it2.value.toString()
+                    binding.gaugeFavTemp.value = sensor.toDouble()
                 }
 
-                items.forEach { item ->
-                    // All the items under listRef
-                    val namefile: String = item.name.substring(0,item.name.lastIndexOf("."))
-                    val exten: String = item.name.substring(item.name.lastIndexOf(".")+1)
+                /////
 
-                    if(namefile=="plant$fav"){
-                        val pathString = item.path
-                        val localFile = File.createTempFile("images", exten)
+                val storage = Firebase.storage
+                val storageRef = storage.reference
 
-                        //Log.i("FireStorage",exten)
-                        val pathRef = storageRef.child(pathString)
+                val listRef = storage.reference.child("users/${uid.toString()}")
 
-                        pathRef.getFile(localFile).addOnSuccessListener {
-                            binding.imgViewPlant.setImageURI(localFile.toUri())
-                        }.addOnFailureListener {
-                            Toast.makeText(this, "Algo salio mal", Toast.LENGTH_SHORT).show()
-                            Log.e("Error",it.toString())
+                // You'll need to import com.google.firebase.storage.ktx.component1 and
+                // com.google.firebase.storage.ktx.component2
+                listRef.listAll()
+                    .addOnSuccessListener { (items, prefixes) ->
+                        prefixes.forEach { _ ->
+
+                        }
+
+                        items.forEach { item ->
+                            // All the items under listRef
+                            val namefile: String = item.name.substring(0,item.name.lastIndexOf("."))
+                            val exten: String = item.name.substring(item.name.lastIndexOf(".")+1)
+
+                            if(namefile=="plant$fav"){
+                                val pathString = item.path
+                                val localFile = File.createTempFile("images", exten)
+
+                                //Log.i("FireStorage",exten)
+                                val pathRef = storageRef.child(pathString)
+
+                                pathRef.getFile(localFile).addOnSuccessListener {
+                                    binding.imgViewPlant.setImageURI(localFile.toUri())
+                                }.addOnFailureListener {
+                                    Toast.makeText(this, "Algo salio mal", Toast.LENGTH_SHORT).show()
+                                    Log.e("Error",it.toString())
+                                }
+                            }
+
                         }
                     }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Algo salio mal", Toast.LENGTH_SHORT).show()
+                        Log.e("Error",it.toString())
+                    }
 
-                }
             }
             .addOnFailureListener {
-                Toast.makeText(this, "Algo salio mal", Toast.LENGTH_SHORT).show()
                 Log.e("Error",it.toString())
             }
 
@@ -263,23 +281,6 @@ class ActMain : AppCompatActivity() {
             //Toast.makeText(this,"Foto",Toast.LENGTH_SHORT).show()
         }
 
-    }
-
-    fun obtenerFav():Int{
-
-        val prefer : SharedPreferences = this.getSharedPreferences("Ajustes", Context.MODE_PRIVATE)
-        var fav : Int = -1
-        if(prefer.getInt("fav",-1)!=-1){
-            fav = prefer.getInt("fav",-1)
-        }
-        else{
-            dbFireStore.collection("usuarios").document(prefer.getString("correo","").toString()).get()
-                .addOnSuccessListener {
-                    fav = it.get("fav") as Int
-                }
-        }
-
-        return fav
     }
 
 }
