@@ -1,12 +1,16 @@
 package com.mixdor.covertpots
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.mixdor.covertpots.adapter.PlantasAdapter
 import com.mixdor.covertpots.databinding.ActMorePlantsBinding
 import com.mixdor.covertpots.fragment.FragDetallesPlanta
@@ -56,29 +60,46 @@ class ActMorePlants : AppCompatActivity() {
     }
 
     private fun actualizarValores() {
-        val recyclerPlants = findViewById<RecyclerView>(R.id.recyclerViewPlants)
-        recyclerPlants.layoutManager = LinearLayoutManager(this)
-        recyclerPlants.adapter = PlantasAdapter(getItems(), { itemSelected(it) }, { itemLongSelected(it)})
-    }
-
-    private fun getItems(): MutableList<mPlanta> {
         val itemLists : MutableList<mPlanta> = ArrayList()
 
-        itemLists.add(mPlanta(16523, "Kotralia", 44, 27, 87, 15,false))
-        itemLists.add(mPlanta(44618, "Castorila", 55, 96, 44, 66, false))
-        itemLists.add(mPlanta(15143, "Andesita", 87, 15, 66, 44, false))
-        itemLists.add(mPlanta(96318, "Viperesa", 96, 44, 15, 13, false))
-        itemLists.add(mPlanta(94664, "Kotralia2", 77, 27, 66, 37,false))
-        itemLists.add(mPlanta(41151, "Castorila2", 15, 44, 55, 77, false))
-        itemLists.add(mPlanta(33445, "Andesita2", 87, 77, 15, 44, false))
-        itemLists.add(mPlanta(10024, "Viperesa2", 27, 96, 87, 96, false))
-        itemLists.add(mPlanta(47620, "Kotralia3", 66, 55, 13, 44,false))
-        itemLists.add(mPlanta(75141, "Castorila3", 96, 87, 44, 55, false))
-        itemLists.add(mPlanta(11146, "Andesita3", 13, 66, 27, 87, false))
-        itemLists.add(mPlanta(10101, "Viperesa3", 27, 44, 87, 66, false))
-        itemLists.add(mPlanta(14691, "Viperesa4", 87, 55, 44, 15, false))
+        val database = Firebase.database
+        val user = Firebase.auth.currentUser
+        val uid = user?.uid
+        val refPath = database.getReference("users/${uid}")
 
-        return itemLists
+        refPath.child("plants").get()
+            .addOnSuccessListener { it1 ->
+
+                val mapa = it1.value as Map<String, HashMap<String, Any>>
+                val claves = mapa.keys
+
+                for (clave in claves){
+                    val variable: HashMap<String, Any>? = mapa[clave]
+                    //Log.i("getItems",variable.toString())
+                    val objName = variable?.get("name").toString()
+                    val objTemp = variable?.get("sTemp").toString()
+                    val objIlum = variable?.get("sIlum").toString()
+                    val objHumS = variable?.get("sHumS").toString()
+                    val objHumA = variable?.get("sHumA").toString()
+                    val objType = variable?.get("sHumA").toString()
+                    val objStatus = variable?.get("sHumA").toString()
+                    val objFav = variable?.get("sHumA").toString().toBoolean()
+
+                    itemLists.add(
+                        mPlanta(Integer.valueOf(clave),
+                            objName,
+                            objTemp.toInt(),
+                            objIlum.toInt(),
+                            objHumS.toInt(),
+                            objHumA.toInt(),
+                            false
+                        ))
+                }
+                val recyclerPlants = findViewById<RecyclerView>(R.id.recyclerViewPlants)
+                recyclerPlants.layoutManager = LinearLayoutManager(this)
+                recyclerPlants.adapter = PlantasAdapter(itemLists, { itemSelected(it) }, { itemLongSelected(it)})
+                Log.i("getItemsInterno", itemLists.toString())
+            }
     }
 
     fun itemSelected(planta:mPlanta){
